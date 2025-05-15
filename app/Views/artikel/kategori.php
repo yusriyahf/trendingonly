@@ -28,7 +28,7 @@
                 <!-- post -->
                 <div class="post post-thumb">
                     <?php
-                    $firstArticle = $artikels[0];
+                    $firstArticle = $artikels[0] ?? 'tidak ada isinya';
                     $categorySlug = $firstArticle['kategori_slug'] ?? $firstArticle['slug_kategori'] ?? $kategori['slug_id'] ?? 'uncategorized';
                     $categoryName = $firstArticle['nama_kategori'] ?? $kategori['nama_kategori_id'] ?? 'Uncategorized';
                     ?>
@@ -210,8 +210,8 @@
             <div class="col-md-4">
                 <!-- ad widget-->
                 <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block; margin: auto;">
-                        <img class="img-responsive" src="<?= base_url('assets/img/ad-3.jpg'); ?>" alt="">
+                    <a href="#" style="display:inline-block; margin:auto;">
+                        <img class=" img-responsive" src="<?= base_url('assets/img/ad-3.jpg'); ?>" alt="">
                     </a>
                 </div>
                 <!-- /ad widget -->
