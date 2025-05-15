@@ -35,12 +35,12 @@
                     <a class="post-img" href="blog-post.html"><img src="./img/post-13.jpg" alt=""></a>
                     <div class="post-body">
                         <div class="post-category">
-                            <a href="category.html">Travel</a>
-                            <a href="category.html">Lifestyle</a>
+                            <a href="#">Travel</a>
+                            <a href="#">Lifestyle</a>
                         </div>
                         <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
                         <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
+                            <li><a href="#">John Doe</a></li>
                             <li>20 April 2018</li>
                         </ul>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
@@ -53,11 +53,11 @@
                     <a class="post-img" href="blog-post.html"><img src="./img/post-1.jpg" alt=""></a>
                     <div class="post-body">
                         <div class="post-category">
-                            <a href="category.html">Travel</a>
+                            <a href="#">Travel</a>
                         </div>
                         <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
                         <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
+                            <li><a href="#">John Doe</a></li>
                             <li>20 April 2018</li>
                         </ul>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
@@ -70,11 +70,11 @@
                     <a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
                     <div class="post-body">
                         <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
+                            <a href="#">Lifestyle</a>
                         </div>
                         <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
                         <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
+                            <li><a href="#">John Doe</a></li>
                             <li>20 April 2018</li>
                         </ul>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
@@ -87,12 +87,12 @@
                     <a class="post-img" href="blog-post.html"><img src="./img/post-6.jpg" alt=""></a>
                     <div class="post-body">
                         <div class="post-category">
-                            <a href="category.html">Fashion</a>
-                            <a href="category.html">Lifestyle</a>
+                            <a href="#">Fashion</a>
+                            <a href="#">Lifestyle</a>
                         </div>
                         <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
                         <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
+                            <li><a href="#">John Doe</a></li>
                             <li>20 April 2018</li>
                         </ul>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
@@ -105,12 +105,12 @@
                     <a class="post-img" href="blog-post.html"><img src="./img/post-7.jpg" alt=""></a>
                     <div class="post-body">
                         <div class="post-category">
-                            <a href="category.html">Health</a>
-                            <a href="category.html">Lifestyle</a>
+                            <a href="#">Health</a>
+                            <a href="#">Lifestyle</a>
                         </div>
                         <h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
                         <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
+                            <li><a href="#">John Doe</a></li>
                             <li>20 April 2018</li>
                         </ul>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>

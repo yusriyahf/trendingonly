@@ -8,8 +8,16 @@ class UserModel extends Model
 {
     protected $table = 'tb_users';
     protected $primaryKey = 'id_user';
-    protected $allowedFields = ['username', 'password', 'nama_lengkap', 'email', 'role', 'created_at'];
-    protected $useTimestamps = false;
+
+    protected $allowedFields = [
+        'username',
+        'password',
+        'nama_lengkap',
+        'email',
+        'role'
+    ];
+
+    protected $useTimestamps = true;
 
     // Untuk menambahkan data
     public function createUser($data)

@@ -4,662 +4,322 @@
 
 <div class="section">
     <!-- container -->
+    <?php
+    // Mengambil data artikel terbaru dari 4 jam terakhir
+    $db = \Config\Database::connect();
+    $fourHoursAgo = date('Y-m-d H:i:s', strtotime('-4 hours'));
+
+    $builder = $db->table('tb_artikel');
+    $builder->select('tb_artikel.*, tb_users.nama_lengkap, tb_kategori.nama_kategori_id as nama_kategori_id');
+    $builder->join('tb_users', 'tb_users.id_user = tb_artikel.id_user');
+    $builder->join('tb_kategori', 'tb_kategori.id_kategori = tb_artikel.id_kategori', 'left');
+    $builder->where('tb_artikel.published_at >=', $fourHoursAgo);
+    $builder->orderBy('tb_artikel.published_at', 'DESC');
+    $recentArticles = $builder->get()->getResultArray();
+
+
+    ?>
+
     <div class="container">
         <!-- row -->
         <div id="hot-post" class="row hot-post">
-            <div class="col-md-8 hot-post-left">
-                <!-- post -->
-                <div class="post post-thumb">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/hot-post-1.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
+            <?php if (!empty($latestArticles)): ?>
+                <div class="col-md-8 hot-post-left">
+                    <!-- post -->
+                    <div class="post post-thumb">
+                        <a class="post-img" href="/<?= $latestArticles[0]['kategori']['slug_id']; ?>/<?= $latestArticles[0]['slug_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $latestArticles[0]['thumbnail']); ?>" alt="<?= $latestArticles[0]['judul_id']; ?>">
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                <a href="/kategori/<?= $latestArticles[0]['kategori']['slug_id']; ?>"><?= $latestArticles[0]['kategori']['nama_kategori_id']; ?></a>
+                            </div>
+                            <h3 class="post-title title-lg">
+                                <a href="/<?= $latestArticles[0]['kategori']['slug_id']; ?>/<?= $latestArticles[0]['slug_id']; ?>"><?= $latestArticles[0]['judul_id']; ?></a>
+                            </h3>
+                            <div class="article-meta">
+                                <span class="author"><?= htmlspecialchars($latestArticles[0]['nama_lengkap'] ?? '', ENT_QUOTES) ?></span>
+                                <span class="publish-date"><?= date('d F Y', strtotime($latestArticles[0]['published_at'])) ?></span>
+                            </div>
                         </div>
-                        <h3 class="post-title title-lg"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
                     </div>
+                    <!-- /post -->
                 </div>
-                <!-- /post -->
-            </div>
-            <div class="col-md-4 hot-post-right">
-                <!-- post -->
-                <div class="post post-thumb">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/hot-post-2.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /post -->
 
-                <!-- post -->
-                <div class="post post-thumb">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/hot-post-3.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Fashion</a>
-                            <a href="category.html">Lifestyle</a>
+                <div class="col-md-4 hot-post-right">
+                    <!-- post -->
+                    <?php $secondArticle = count($latestArticles) > 1 ? $latestArticles[1] : $latestArticles[0]; ?>
+                    <div class="post post-thumb">
+                        <a class="post-img" href="/<?= $secondArticle['kategori']['slug_id']; ?>/<?= $secondArticle['slug_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $secondArticle['thumbnail']); ?>" alt="<?= $secondArticle['judul_id']; ?>">
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                <a href="/kategori/<?= $secondArticle['kategori']['slug_id']; ?>"><?= $secondArticle['kategori']['nama_kategori_id']; ?></a>
+                            </div>
+                            <h3 class="post-title">
+                                <a href="/<?= $secondArticle['kategori']['slug_id']; ?>/<?= $secondArticle['slug_id']; ?>"><?= $secondArticle['judul_id']; ?></a>
+                            </h3>
+                            <div class="article-meta">
+                                <span class="author"><?= htmlspecialchars($secondArticle['nama_lengkap'] ?? '', ENT_QUOTES) ?></span>
+                                <span class="publish-date"><?= date('d F Y', strtotime($secondArticle['published_at'])) ?></span>
+                            </div>
                         </div>
-                        <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
                     </div>
+                    <!-- /post -->
+
+                    <!-- post -->
+                    <?php
+                    $thirdArticle = count($latestArticles) > 2
+                        ? $latestArticles[2]
+                        : (count($latestArticles) > 1
+                            ? $latestArticles[1]
+                            : $latestArticles[0]);
+                    ?>
+                    <div class="post post-thumb">
+                        <a class="post-img" href="/<?= $thirdArticle['kategori']['slug_id']; ?>/<?= $thirdArticle['slug_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $thirdArticle['thumbnail']); ?>" alt="<?= $thirdArticle['judul_id']; ?>">
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                <a href="/kategori/<?= $thirdArticle['kategori']['slug_id']; ?>"><?= $thirdArticle['kategori']['nama_kategori_id']; ?></a>
+                            </div>
+                            <h3 class="post-title">
+                                <a href="/<?= $thirdArticle['kategori']['slug_id']; ?>/<?= $thirdArticle['slug_id']; ?>"><?= $thirdArticle['judul_id']; ?></a>
+                            </h3>
+                            <div class="article-meta">
+                                <span class="author"><?= htmlspecialchars($thirdArticle['nama_lengkap'] ?? '', ENT_QUOTES) ?></span>
+                                <span class="publish-date"><?= date('d F Y', strtotime($thirdArticle['published_at'])) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /post -->
                 </div>
-                <!-- /post -->
-            </div>
+            <?php endif; ?>
         </div>
         <!-- /row -->
     </div>
-    <!-- /container -->
-</div>
-<!-- /SECTION -->
+    <!-- /SECTION -->
 
-<!-- SECTION -->
-<div class="section">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-            <div class="col-md-8">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h2 class="title">Recent posts</h2>
-                        </div>
-                    </div>
-                    <!-- post -->
-                    <div class="col-md-6">
-                        <div class="post">
-                            <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-1.jpg'); ?>" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-category">
-                                    <a href="category.html">Travel</a>
+
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-8">
+                    <?php
+                    // Mengambil 3 kategori pertama
+                    $limitedCategories = array_slice($kategoriArtikel, 0, 3);
+
+                    foreach ($limitedCategories as $item):
+                        // Artikel sudah diurutkan dari terbaru oleh Controller
+                        $displayArticles = $item['artikels'];
+                        // Tentukan apakah ini kategori olahraga
+                        $isOlahraga = (strtolower($item['kategori']['nama_kategori_id']) === 'olahraga') ||
+                            (isset($item['kategori']['slug_id']) && $item['kategori']['slug_id'] === 'olahraga');
+                    ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-title">
+                                    <h2 class="title"><?= esc($item['kategori']['nama_kategori_id']) ?></h2>
                                 </div>
-                                <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                                <ul class="post-meta">
-                                    <li><a href="author.html">John Doe</a></li>
-                                    <li>20 April 2018</li>
-                                </ul>
                             </div>
-                        </div>
-                    </div>
-                    <!-- /post -->
 
-                    <!-- post -->
-                    <div class="col-md-6">
-                        <div class="post">
-                            <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-2.jpg'); ?>" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-category">
-                                    <a href="category.html">Technology</a>
-                                    <a href="category.html">Lifestyle</a>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
-                                <ul class="post-meta">
-                                    <li><a href="author.html">John Doe</a></li>
-                                    <li>20 April 2018</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <div class="clearfix visible-md visible-lg"></div>
-
-                    <!-- post -->
-                    <div class="col-md-6">
-                        <div class="post">
-                            <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-4.jpg'); ?>" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-category">
-                                    <a href="category.html">Health</a>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                                <ul class="post-meta">
-                                    <li><a href="author.html">John Doe</a></li>
-                                    <li>20 April 2018</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="col-md-6">
-                        <div class="post">
-                            <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-7.jpg'); ?>" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-category">
-                                    <a href="category.html">Health</a>
-                                    <a href="category.html">Lifestyle</a>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                                <ul class="post-meta">
-                                    <li><a href="author.html">John Doe</a></li>
-                                    <li>20 April 2018</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /post -->
-                </div>
-                <!-- /row -->
-
-                <!-- row -->
-                <?php foreach ($kategoriArtikel as $item): ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="section-title">
-                                <h2 class="title"><?= esc($item['kategori']['nama_kategori_id']) ?></h2>
-                            </div>
-                        </div>
-                        <!-- post -->
-                        <?php if (count($item['artikels']) > 0): ?>
-                            <?php foreach ($item['artikels'] as $artikel): ?>
-                                <div class="col-md-4">
-                                    <div class="post post-sm">
-                                        <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-9.jpg'); ?>" alt=""></a>
-                                        <div class="post-body">
-                                            <div class="post-category">
-                                                <a href="<?= base_url($item['kategori']['slug_id']); ?>"><?= esc($item['kategori']['slug_id']) ?></a>
+                            <?php if (!empty($displayArticles)): ?>
+                                <?php foreach ($displayArticles as $artikel): ?>
+                                    <div class="<?= $isOlahraga ? 'col-md-2' : 'col-md-4' ?>">
+                                        <div class="post post-sm">
+                                            <a class="post-img" href="<?= base_url($item['kategori']['slug_id'] . '/' . $artikel['slug_id']) ?>">
+                                                <?php
+                                                $thumbnail = !empty($artikel['thumbnail'])
+                                                    ? base_url('uploads/' . $artikel['thumbnail'])
+                                                    : base_url('assets/img/default-thumbnail.jpg');
+                                                ?>
+                                                <div class="article-image-container" style="width: 100%; height: 200px; overflow: hidden;">
+                                                    <img src="<?= $thumbnail ?>"
+                                                        alt="<?= htmlspecialchars($artikel['judul_id'], ENT_QUOTES) ?>"
+                                                        class="zoom-on-hover"
+                                                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
+                                                        onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
+                                                </div>
+                                            </a>
+                                            <div class="post-body">
+                                                <div class="post-category">
+                                                    <a href="<?= base_url($item['kategori']['slug_id']) ?>">
+                                                        <?= esc($item['kategori']['nama_kategori_id']) ?>
+                                                    </a>
+                                                </div>
+                                                <h3 class="post-title title-sm">
+                                                    <a href="<?= base_url($item['kategori']['slug_id'] . '/' . $artikel['slug_id']) ?>">
+                                                        <?= esc($artikel['judul_id']) ?>
+                                                    </a>
+                                                </h3>
+                                                <ul class="post-meta">
+                                                    <li><a href="#"><?= esc($artikel['nama_lengkap'] ?? 'Penulis Tidak Diketahui') ?></a></li>
+                                                    <li><?= date('d F Y', strtotime($artikel['published_at'] ?? 'now')) ?></li>
+                                                </ul>
                                             </div>
-                                            <h3 class="post-title title-sm"><a href="<?= base_url($item['kategori']['slug_id'] . '/' . $artikel['slug_id']); ?>
-"><?= esc($artikel['judul_id']) ?></a></h3>
-                                            <ul class="post-meta">
-                                                <li><a href="author.html">John Doe</a></li>
-                                                <li><?= date('d F Y', strtotime($artikel['published_at'])) ?></li>
-
-                                            </ul>
                                         </div>
                                     </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="col-md-12">
+                                    <p>Tidak ada artikel yang tersedia untuk kategori ini.</p>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>Tidak ada artikel.</p>
-                        <?php endif; ?>
-                        <!-- /post -->
-                    </div>
-                <?php endforeach; ?>
-                <!-- /row -->
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
 
+
+                <style>
+                    .zoom-on-hover {
+                        transition: transform 0.5s ease-in-out;
+                    }
+
+                    .zoom-on-hover:hover {
+                        transform: scale(1.03);
+                    }
+
+                    .article-image-container {
+                        transition: transform 0.5s ease-in-out;
+                    }
+
+                    .post-img:hover .article-image-container {
+                        transform: scale(1.015);
+                    }
+                </style>
+
+                <div class="col-md-4">
+                    <!-- ad widget-->
+                    <div class="aside-widget text-center">
+                        <a href="#" style="display: inline-block;margin: auto;">
+                            <img class="img-responsive" src="<?= base_url('assets/img/ad-3.jpg'); ?>" alt="">
+                        </a>
+                    </div>
+                    <!-- /ad widget -->
+
+                    <!-- social widget -->
+                    <div class="aside-widget">
+                        <div class="section-title">
+                            <h2 class="title">Social Media</h2>
+                        </div>
+                        <div class="social-widget">
+                            <ul>
+                                <li>
+                                    <a href="#" class="social-facebook">
+                                        <i class="fa fa-facebook"></i>
+                                        <span>21.2K<br>Followers</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="social-twitter">
+                                        <i class="fa fa-twitter"></i>
+                                        <span>10.2K<br>Followers</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="social-google-plus">
+                                        <i class="fa fa-google-plus"></i>
+                                        <span>5K<br>Followers</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /social widget -->
+
+                    <!-- category widget -->
+                    <div class="aside-widget">
+                        <div class="section-title">
+                            <h2 class="title">Categorie</h2>
+                        </div>
+                        <div class="category-widget">
+                            <ul>
+                                <?php foreach (array_slice($allKategoris, 0, 3) as $item): ?>
+                                    <li>
+                                        <a href="<?= base_url($item['kategori']['slug_id']) ?>">
+                                            <?= $item['kategori']['nama_kategori_id'] ?>
+                                            <span><?= $item['count'] ?></span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /category widget -->
+
+                    <!-- newsletter widget -->
+                    <div class="aside-widget">
+                        <div class="section-title">
+                            <h2 class="title">Newsletter</h2>
+                        </div>
+                        <div class="newsletter-widget">
+                            <form>
+                                <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>
+                                <input class="input" name="newsletter" placeholder="Enter Your Email" disabled>
+                                <button class="primary-button" disabled>Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /newsletter widget -->
+                    <!-- post widget -->
+                    <div class="aside-widget">
+                        <div class="section-title">
+                            <h2 class="title">Popular Posts</h2>
+                        </div>
+                        <?php foreach ($popularArticles as $article): ?>
+                            <!-- post -->
+                            <div class="post post-widget">
+                                <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
+                                    <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>">
+                                </a>
+                                <div class="post-body">
+                                    <div class="post-category">
+                                        <a href="<?= base_url($article['kategori']['slug_id']) ?>">
+                                            <?= $article['kategori']['nama_kategori_id'] ?>
+                                        </a>
+                                    </div>
+                                    <h3 class="post-title">
+                                        <a href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
+                                            <?= $article['judul_id'] ?>
+                                        </a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- /post -->
+                        <?php endforeach; ?>
+                    </div>
+                    <!-- /post widget -->
+                </div>
             </div>
-            <div class="col-md-4">
-                <!-- ad widget-->
-                <div class="aside-widget text-center">
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /SECTION -->
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- ad -->
+                <div class="col-md-12 section-row text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="<?= base_url('assets/img/ad-3.jpg'); ?>" alt="">
+                        <img class="img-responsive" src="<?= base_url('assets/img/ad-2.jpg'); ?>" alt="">
                     </a>
                 </div>
-                <!-- /ad widget -->
-
-                <!-- social widget -->
-                <div class="aside-widget">
-                    <div class="section-title">
-                        <h2 class="title">Social Media</h2>
-                    </div>
-                    <div class="social-widget">
-                        <ul>
-                            <li>
-                                <a href="#" class="social-facebook">
-                                    <i class="fa fa-facebook"></i>
-                                    <span>21.2K<br>Followers</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="social-twitter">
-                                    <i class="fa fa-twitter"></i>
-                                    <span>10.2K<br>Followers</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="social-google-plus">
-                                    <i class="fa fa-google-plus"></i>
-                                    <span>5K<br>Followers</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /social widget -->
-
-                <!-- category widget -->
-                <div class="aside-widget">
-                    <div class="section-title">
-                        <h2 class="title">Categories</h2>
-                    </div>
-                    <div class="category-widget">
-                        <ul>
-                            <li><a href="#">Lifestyle <span>451</span></a></li>
-                            <li><a href="#">Fashion <span>230</span></a></li>
-                            <li><a href="#">Technology <span>40</span></a></li>
-                            <li><a href="#">Travel <span>38</span></a></li>
-                            <li><a href="#">Health <span>24</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /category widget -->
-
-                <!-- newsletter widget -->
-                <div class="aside-widget">
-                    <div class="section-title">
-                        <h2 class="title">Newsletter</h2>
-                    </div>
-                    <div class="newsletter-widget">
-                        <form>
-                            <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>
-                            <input class="input" name="newsletter" placeholder="Enter Your Email">
-                            <button class="primary-button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /newsletter widget -->
-
-                <!-- post widget -->
-                <div class="aside-widget">
-                    <div class="section-title">
-                        <h2 class="title">Popular Posts</h2>
-                    </div>
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-3.jpg'); ?>" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="category.html">Lifestyle</a>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-2.jpg'); ?>" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="category.html">Technology</a>
-                                <a href="category.html">Lifestyle</a>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-4.jpg'); ?>" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="category.html">Health</a>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-5.jpg'); ?>" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="category.html">Health</a>
-                                <a href="category.html">Lifestyle</a>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                        </div>
-                    </div>
-                    <!-- /post -->
-                </div>
-                <!-- /post widget -->
+                <!-- /ad -->
             </div>
+            <!-- /row -->
         </div>
-        <!-- /row -->
+        <!-- /container -->
     </div>
-    <!-- /container -->
-</div>
-<!-- /SECTION -->
+    <!-- /SECTION -->
 
-<!-- SECTION -->
-<div class="section">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-            <!-- ad -->
-            <div class="col-md-12 section-row text-center">
-                <a href="#" style="display: inline-block;margin: auto;">
-                    <img class="img-responsive" src="<?= base_url('assets/img/ad-2.jpg'); ?>" alt="">
-                </a>
-            </div>
-            <!-- /ad -->
-        </div>
-        <!-- /row -->
-    </div>
-    <!-- /container -->
-</div>
-<!-- /SECTION -->
-
-<!-- SECTION -->
-<div class="section">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="section-title">
-                    <h2 class="title">Lifestyle</h2>
-                </div>
-                <!-- post -->
-                <div class="post">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-6.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Fashion</a>
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /post -->
-            </div>
-            <div class="col-md-4">
-                <div class="section-title">
-                    <h2 class="title">Fashion</h2>
-                </div>
-                <!-- post -->
-                <div class="post">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-5.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /post -->
-            </div>
-            <div class="col-md-4">
-                <div class="section-title">
-                    <h2 class="title">Health</h2>
-                </div>
-                <!-- post -->
-                <div class="post">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-9.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /post -->
-            </div>
-        </div>
-        <!-- /row -->
-
-        <!-- row -->
-        <div class="row">
-            <div class="col-md-4">
-                <!-- post -->
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-1.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Travel</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-2.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Technology</a>
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-3.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-4.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Health</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-5.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Health</a>
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-6.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Fashion</a>
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-8.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Travel</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-9.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Technology</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/widget-10.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /row -->
-    </div>
-    <!-- /container -->
-</div>
-<!-- /SECTION -->
-
-<!-- SECTION -->
-<div class="section">
-    <!-- container -->
-    <div class="container">
-        <!-- row -->
-        <div class="row">
-            <div class="col-md-8">
-                <!-- post -->
-                <!-- post -->
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-13.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Travel</a>
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-1.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Travel</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-5.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-6.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Fashion</a>
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/post-7.jpg'); ?>" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-category">
-                            <a href="category.html">Health</a>
-                            <a href="category.html">Lifestyle</a>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
-                        <ul class="post-meta">
-                            <li><a href="author.html">John Doe</a></li>
-                            <li>20 April 2018</li>
-                        </ul>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <div class="section-row loadmore text-center">
-                    <a href="#" class="primary-button">Load More</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <!-- galery widget -->
-                <div class="aside-widget">
-                    <div class="section-title">
-                        <h2 class="title">Instagram</h2>
-                    </div>
-                    <div class="galery-widget">
-                        <ul>
-                            <li><a href="#"><img src="<?= base_url('assets/img/galery-1.jpg'); ?>" alt=""></a></li>
-                            <li><a href="#"><img src="<?= base_url('assets/img/galery-2.jpg'); ?>" alt=""></a></li>
-                            <li><a href="#"><img src="<?= base_url('assets/img/galery-3.jpg'); ?>" alt=""></a></li>
-                            <li><a href="#"><img src="<?= base_url('assets/img/galery-4.jpg'); ?>" alt=""></a></li>
-                            <li><a href="#"><img src="<?= base_url('assets/img/galery-5.jpg'); ?>" alt=""></a></li>
-                            <li><a href="#"><img src="<?= base_url('assets/img/galery-6.jpg'); ?>" alt=""></a></li>
-                        </ul>
-
-                    </div>
-                </div>
-                <!-- /galery widget -->
-
-                <!-- Ad widget -->
-                <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="<?= base_url('assets/img/ad-1.jpg'); ?>" alt="">
-                    </a>
-                </div>
-                <!-- /Ad widget -->
-            </div>
-        </div>
-        <!-- /row -->
-    </div>
-    <!-- /container -->
-</div>
-
-<?= $this->endSection(); ?>
+    <?= $this->endSection(); ?>

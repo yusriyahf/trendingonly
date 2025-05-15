@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>TrendingOnly</title>
+    <title><?= $lang == 'id' ? ($meta['meta_title_id'] ?? 'Trending Only') : ($meta['meta_title_en'] ?? 'Trending Only'); ?></title>
+
+    <meta name="description" content="<?= $lang == 'id' ? ($meta['meta_description_id'] ?? 'Trending Only') : ($meta['meta_description_en'] ?? 'Trending Only'); ?>">
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CMuli:400,700" rel="stylesheet">

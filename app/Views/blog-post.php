@@ -7,11 +7,11 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="post-category">
-                    <a href="category.html">Lifestyle</a>
+                    <a href="#">Lifestyle</a>
                 </div>
                 <h1>Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</h1>
                 <ul class="post-meta">
-                    <li><a href="author.html">John Doe</a></li>
+                    <li><a href="#">John Doe</a></li>
                     <li>20 April 2018</li>
                     <li><i class="fa fa-comments"></i> 3</li>
                     <li><i class="fa fa-eye"></i> 807</li>
@@ -101,11 +101,11 @@
                 <!-- post author -->
                 <div class="section-row">
                     <div class="section-title">
-                        <h3 class="title">About <a href="author.html">John Doe</a></h3>
+                        <h3 class="title">About <a href="#">John Doe</a></h3>
                     </div>
                     <div class="author media">
                         <div class="media-left">
-                            <a href="author.html">
+                            <a href="#">
                                 <img class="author-img media-object" src="./img/avatar-1.jpg" alt="">
                             </a>
                         </div>
@@ -134,11 +134,11 @@
                                 <a class="post-img" href="blog-post.html"><img src="./img/post-4.jpg" alt=""></a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="category.html">Health</a>
+                                        <a href="#">Health</a>
                                     </div>
                                     <h3 class="post-title title-sm"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
                                     <ul class="post-meta">
-                                        <li><a href="author.html">John Doe</a></li>
+                                        <li><a href="#">John Doe</a></li>
                                         <li>20 April 2018</li>
                                     </ul>
                                 </div>
@@ -152,12 +152,12 @@
                                 <a class="post-img" href="blog-post.html"><img src="./img/post-6.jpg" alt=""></a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="category.html">Fashion</a>
-                                        <a href="category.html">Lifestyle</a>
+                                        <a href="#">Fashion</a>
+                                        <a href="#">Lifestyle</a>
                                     </div>
                                     <h3 class="post-title title-sm"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
                                     <ul class="post-meta">
-                                        <li><a href="author.html">John Doe</a></li>
+                                        <li><a href="#">John Doe</a></li>
                                         <li>20 April 2018</li>
                                     </ul>
                                 </div>
@@ -171,12 +171,12 @@
                                 <a class="post-img" href="blog-post.html"><img src="./img/post-7.jpg" alt=""></a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="category.html">Health</a>
-                                        <a href="category.html">Lifestyle</a>
+                                        <a href="#">Health</a>
+                                        <a href="#">Lifestyle</a>
                                     </div>
                                     <h3 class="post-title title-sm"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
                                     <ul class="post-meta">
-                                        <li><a href="author.html">John Doe</a></li>
+                                        <li><a href="#">John Doe</a></li>
                                         <li>20 April 2018</li>
                                     </ul>
                                 </div>
@@ -360,7 +360,7 @@
                         <a class="post-img" href="blog-post.html"><img src="./img/widget-3.jpg" alt=""></a>
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="category.html">Lifestyle</a>
+                                <a href="#">Lifestyle</a>
                             </div>
                             <h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
                         </div>
@@ -372,8 +372,8 @@
                         <a class="post-img" href="blog-post.html"><img src="./img/widget-2.jpg" alt=""></a>
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="category.html">Technology</a>
-                                <a href="category.html">Lifestyle</a>
+                                <a href="#">Technology</a>
+                                <a href="#">Lifestyle</a>
                             </div>
                             <h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
                         </div>
@@ -385,7 +385,7 @@
                         <a class="post-img" href="blog-post.html"><img src="./img/widget-4.jpg" alt=""></a>
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="category.html">Health</a>
+                                <a href="#">Health</a>
                             </div>
                             <h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
                         </div>
@@ -397,8 +397,8 @@
                         <a class="post-img" href="blog-post.html"><img src="./img/widget-5.jpg" alt=""></a>
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="category.html">Health</a>
-                                <a href="category.html">Lifestyle</a>
+                                <a href="#">Health</a>
+                                <a href="#">Lifestyle</a>
                             </div>
                             <h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
                         </div>

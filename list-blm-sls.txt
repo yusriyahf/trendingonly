@@ -1,0 +1,17 @@
+1. responsive bagian konten terbaru & url untuk kontennya
+2. nama penulis (artikel)
+3. nama kategori yang ada di artikel
+
+
+======================
+Yang Perlu Di perbaiki:
+
+1. untuk artikel yang 3 di atas tidak usah menggunakan filter 4 jam terakhir,
+   buat jika ada yang terbaru, detik atau menit itu juga maka langsung di tampilkan tanpa filter jm terakhir.
+
+2. jika di bagian 3 hot post sudah ada artikel terbaru dari semua kategori artikel, maka di kategori yang 3 
+   tersebut tidak di tampilkan lagi unruk artikelnya di bagian row
+
+3. dan untuk kategori olahraga, tambahkan 1 baris lagi, jadi ada 6 artikel  
+
+======================
