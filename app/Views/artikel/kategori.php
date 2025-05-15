@@ -27,42 +27,18 @@
             <div class="col-md-8">
                 <!-- post -->
                 <div class="post post-thumb">
-                    <?php if (!empty($artikels) && isset($artikels[0])): ?>
-                        <?php
-                        $firstArticle = $artikels[0];
-                        $categorySlug = $firstArticle['kategori_slug'] ?? $firstArticle['slug_kategori'] ?? $kategori['slug_id'] ?? 'uncategorized';
-                        $categoryName = $firstArticle['nama_kategori'] ?? $kategori['nama_kategori_id'] ?? 'Uncategorized';
-                        ?>
-
-                        <a class="post-img" href="/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
-                            <img src="<?= base_url('uploads/' . ($firstArticle['thumbnail'] ?? 'default-thumbnail.jpg')) ?>" alt="<?= htmlspecialchars($firstArticle['judul_id'] ?? '') ?>">
-                        </a>
-
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="/kategori/<?= $categorySlug ?>"><?= htmlspecialchars($categoryName) ?></a>
-                            </div>
-                            <h3 class="post-title title-lg">
-                                <a href="/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
-                                    <?= htmlspecialchars($firstArticle['judul_id'] ?? 'No Title') ?>
-                                </a>
-                            </h3>
-                            <div class="article-meta">
-                                <span class="author"><?= htmlspecialchars($firstArticle['nama_lengkap'] ?? 'Penulis Tidak Diketahui', ENT_QUOTES) ?></span>
-                                <span class="publish-date"><?= date('d F Y', strtotime($firstArticle['published_at'] ?? 'now')) ?></span>
-                            </div>
-                            <div class="image-source-container">
-                                <span class="image-source-label">Sumber Gambar: </span>
-                                <span class="image-source-author">
-                                    <?= (!empty($firstArticle['sumber_gambar']) && trim($firstArticle['sumber_gambar']) !== '')
-                                        ? htmlspecialchars($firstArticle['sumber_gambar'])
-                                        : 'Tidak Diketahui' ?>
-                                </span>
-                            </div>
+                    <a class="post-img" href="blog-post.html"><img src="<?= base_url('assets/img/hot-post-3.jpg'); ?>" alt=""></a>
+                    <div class="post-body">
+                        <div class="post-category">
+                            <a href="category.html">Fashion</a>
+                            <a href="category.html">Lifestyle</a>
                         </div>
-                    <?php else: ?>
-                        <div class="alert alert-warning">Artikel tidak tersedia</div>
-                    <?php endif; ?>
+                        <h3 class="post-title title-lg"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
+                        <ul class="post-meta">
+                            <li><a href="author.html">John Doe</a></li>
+                            <li>20 April 2018</li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- /post -->
 
@@ -216,7 +192,7 @@
             <div class="col-md-4">
                 <!-- ad widget-->
                 <div class="aside-widget text-center">
-                    <a href="#" style="display: inline-block; margin: auto;">
+                    <a href="#" style="display: inline-block;margin: auto;">
                         <img class="img-responsive" src="<?= base_url('assets/img/ad-3.jpg'); ?>" alt="">
                     </a>
                 </div>

@@ -18,7 +18,7 @@ class Artikel extends BaseController
 
     public function kategori($kategoriSlug)
     {
-
+        $lang = session()->get('lang') ?? 'id';
         $categories = $this->kategoriModel->get_categories_with_thumbnails();
 
 
@@ -46,7 +46,28 @@ class Artikel extends BaseController
             // ];
         }
 
+        $kategoriWithCount = [];
+        foreach ($kategoris as $kg) {
+            $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
+            $kategoriWithCount[] = [
+                'kategori' => $kg,
+                'count' => $count
+            ];
+
+
+            // $artikel = $this->artikelModel->getLatestByKategori($kategori['id_kategori'], 3);
+            // $kategoriArtikel[] = [
+            //     'kategori' => $kategori,
+            //     'artikels' => $artikel
+            // ];
+        }
+
+        $meta = $this->kategoriModel->getMetaOnly($kategoriSlug);
+
+        // dd($meta);
         $data = [
+            'lang' => $lang,
+            'meta' => $meta,
             'kategori' => $kategori,
             'artikels' => $artikels,
             'categories' => $categories,
@@ -58,6 +79,8 @@ class Artikel extends BaseController
 
     public function detail($kategoriSlug, $artikelSlug)
     {
+        $lang = session()->get('lang') ?? 'id';
+
         $kategoris = $this->kategoriModel->findAll();
         $kategori = $this->kategoriModel->getBySlug($kategoriSlug);
         if (!$kategori) {
@@ -88,9 +111,56 @@ class Artikel extends BaseController
             $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
         }
 
+
+        $kategoriWithCount = [];
+        foreach ($kategoris as $kg) {
+            $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
+            $kategoriWithCount[] = [
+                'kategori' => $kg,
+                'count' => $count
+            ];
+        }
+
+        $popularArticles = $this->artikelModel
+            ->where('published_at <=', date('Y-m-d H:i:s'))
+            ->orderBy('views', 'DESC')
+            ->orderBy('published_at', 'DESC')
+            ->findAll(4);
+
+        foreach ($popularArticles as &$article) {
+            $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
+        }
+
+        $meta = $this->artikelModel->getMetaOnly($artikelSlug, $kategori['id_kategori']);
+
+
+        $kategoriWithCount = [];
+        foreach ($kategoris as $kg) {
+            $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
+            $kategoriWithCount[] = [
+                'kategori' => $kg,
+                'count' => $count
+            ];
+        }
+
+        $popularArticles = $this->artikelModel
+            ->where('published_at <=', date('Y-m-d H:i:s'))
+            ->orderBy('views', 'DESC')
+            ->orderBy('published_at', 'DESC')
+            ->findAll(4);
+
+        foreach ($popularArticles as &$article) {
+            $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
+        }
+
+        $meta = $this->artikelModel->getMetaOnly($artikelSlug, $kategori['id_kategori']);
+
         $data = [
+            'lang' => $lang,
+            'meta' => $meta,
             'kategori' => $kategori,
             'artikel' => $artikel,
+            'allKategoris' => $kategoriWithCount,
             'allKategoris' => $kategoriWithCount,
             'popularArticles' => $popularArticles
         ];

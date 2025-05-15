@@ -29,4 +29,11 @@ class KategoriModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function getMetaOnly($slug_id)
+    {
+        return $this->select('meta_description_id, meta_description_en, meta_title_id, meta_title_en')
+            ->where('slug_id', $slug_id)
+            ->first();
+    }
 }

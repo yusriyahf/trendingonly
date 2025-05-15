@@ -18,6 +18,15 @@ class ArtikelModel extends Model
      * @param string $language Bahasa yang digunakan (id/en)
      * @return array
      */
+
+
+    /**
+     * Mengambil artikel populer berdasarkan jumlah views
+     * 
+     * @param int $limit Jumlah artikel yang ingin diambil
+     * @param string $language Bahasa yang digunakan (id/en)
+     * @return array
+     */
     public function getPopularArticles($limit = 1, $language = 'id')
     {
         return $this->select("
@@ -54,9 +63,18 @@ class ArtikelModel extends Model
             ->first();
     }
 
+    public function getMetaOnly($slug_id, $id_kategori)
+    {
+        return $this->select('meta_description_id, meta_description_en, meta_title_id, meta_title_en')
+            ->where('slug_id', $slug_id)
+            ->where('id_kategori', $id_kategori)
+            ->first();
+    }
+
     // Artikel Kategori di Beranda
     public function getLatestByKategori($id_kategori, $limit = 6)
     {
+
         return $this->select('tb_artikel.*, tb_users.nama_lengkap')
             ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user', 'left')
             ->where('id_kategori', $id_kategori)
@@ -64,6 +82,8 @@ class ArtikelModel extends Model
             ->limit($limit)
             ->find();
     }
+
+
 
     public function countByKategori($id_kategori)
     {
