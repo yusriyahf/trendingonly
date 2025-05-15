@@ -66,9 +66,6 @@ class ArtikelModel extends Model
         return $this->select('tb_artikel.*, tb_users.nama_lengkap')
             ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user', 'left')
             ->where('id_kategori', $id_kategori)
-        return $this->select('tb_artikel.*, tb_users.nama_lengkap')
-            ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user', 'left')
-            ->where('id_kategori', $id_kategori)
             ->orderBy('published_at', 'DESC')
             ->findAll();
     }
@@ -92,11 +89,8 @@ class ArtikelModel extends Model
 
     // Artikel Kategori di Beranda
     public function getLatestByKategori($id_kategori, $limit = 6)
-    public function getLatestByKategori($id_kategori, $limit = 6)
     {
-        return $this->select('tb_artikel.*, tb_users.nama_lengkap')
-            ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user', 'left')
-            ->where('id_kategori', $id_kategori)
+
         return $this->select('tb_artikel.*, tb_users.nama_lengkap')
             ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user', 'left')
             ->where('id_kategori', $id_kategori)

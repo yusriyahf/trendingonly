@@ -161,7 +161,6 @@ class Artikel extends BaseController
             'kategori' => $kategori,
             'artikel' => $artikel,
             'allKategoris' => $kategoriWithCount,
-            'popularArticles' => $popularArticles
             'allKategoris' => $kategoriWithCount,
             'popularArticles' => $popularArticles
         ];
