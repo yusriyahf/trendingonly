@@ -18,6 +18,11 @@ class Artikel extends BaseController
 
     public function kategori($kategoriSlug)
     {
+
+        $categories = $this->kategoriModel->get_categories_with_thumbnails();
+
+
+        $kategoris = $this->kategoriModel->findAll();
         $kategori = $this->kategoriModel->getBySlug($kategoriSlug);
         if (!$kategori) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Kategori tidak ditemukan');
@@ -25,9 +30,27 @@ class Artikel extends BaseController
 
         $artikels = $this->artikelModel->getByKategori($kategori['id_kategori']);
 
+        $kategoriWithCount = [];
+        foreach ($kategoris as $kg) {
+            $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
+            $kategoriWithCount[] = [
+                'kategori' => $kg,
+                'count' => $count
+            ];
+
+
+            // $artikel = $this->artikelModel->getLatestByKategori($kategori['id_kategori'], 3);
+            // $kategoriArtikel[] = [
+            //     'kategori' => $kategori,
+            //     'artikels' => $artikel
+            // ];
+        }
+
         $data = [
             'kategori' => $kategori,
             'artikels' => $artikels,
+            'categories' => $categories,
+            'allKategoris' => $kategoriWithCount
         ];
 
         return view('artikel/kategori', $data);
@@ -35,6 +58,7 @@ class Artikel extends BaseController
 
     public function detail($kategoriSlug, $artikelSlug)
     {
+        $kategoris = $this->kategoriModel->findAll();
         $kategori = $this->kategoriModel->getBySlug($kategoriSlug);
         if (!$kategori) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Kategori tidak ditemukan');
@@ -45,9 +69,30 @@ class Artikel extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Artikel tidak ditemukan');
         }
 
+        $kategoriWithCount = [];
+        foreach ($kategoris as $kg) {
+            $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
+            $kategoriWithCount[] = [
+                'kategori' => $kg,
+                'count' => $count
+            ];
+        }
+
+        $popularArticles = $this->artikelModel
+            ->where('published_at <=', date('Y-m-d H:i:s'))
+            ->orderBy('views', 'DESC')
+            ->orderBy('published_at', 'DESC')
+            ->findAll(4);
+
+        foreach ($popularArticles as &$article) {
+            $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
+        }
+
         $data = [
             'kategori' => $kategori,
             'artikel' => $artikel,
+            'allKategoris' => $kategoriWithCount,
+            'popularArticles' => $popularArticles
         ];
 
         return view('artikel/detail', $data);

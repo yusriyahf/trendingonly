@@ -22,11 +22,14 @@
                     <h3 class="footer-title">Categories</h3>
                     <div class="category-widget">
                         <ul>
-                            <li><a href="#">Lifestyle <span>451</span></a></li>
-                            <li><a href="#">Fashion <span>230</span></a></li>
-                            <li><a href="#">Technology <span>40</span></a></li>
-                            <li><a href="#">Travel <span>38</span></a></li>
-                            <li><a href="#">Health <span>24</span></a></li>
+                            <?php foreach ($allKategoris as $item): ?>
+                                <li>
+                                    <a href="<?= base_url('kategori/' . $item['kategori']['slug_id']) ?>">
+                                        <?= esc($item['kategori']['nama_kategori_id']) ?>
+                                        <span><?= $item['count'] ?></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
@@ -57,8 +60,8 @@
                     <div class="newsletter-widget">
                         <form>
                             <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>
-                            <input class="input" name="newsletter" placeholder="Enter Your Email">
-                            <button class="primary-button">Subscribe</button>
+                            <input class="input" name="newsletter" placeholder="Enter Your Email" disabled>
+                            <button class="primary-button" disabled>Subscribe</button>
                         </form>
                     </div>
                 </div>
@@ -70,9 +73,9 @@
         <div class="footer-bottom row">
             <div class="col-md-6 col-md-push-6">
                 <ul class="footer-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contacts</a></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contacts</a></li>
                     <li><a href="#">Advertise</a></li>
                     <li><a href="#">Privacy</a></li>
                 </ul>
@@ -82,8 +85,7 @@
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>
                         document.write(new Date().getFullYear());
-                    </script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </script> All rights reserved | Made By ELECOMP INDONESIA
                 </div>
             </div>
         </div>

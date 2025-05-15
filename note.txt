@@ -1,0 +1,706 @@
+masih belum responsive selain ukuran laptop masih belum responsive
+
+<style>
+    /* Base Styles */
+    .featured-article {
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        background: #000;
+    }
+
+    .featured-article:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .article-link {
+        display: block;
+        height: 100%;
+        text-decoration: none;
+        position: relative;
+        color: inherit;
+    }
+
+    .article-image-container {
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .article-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1);
+        opacity: 0.9;
+    }
+
+    .article-link:hover .article-image {
+        transform: scale(1.08);
+        opacity: 0.8;
+    }
+
+    .article-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2.5rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%);
+        color: #fff;
+    }
+
+    .article-category {
+        display: inline-block;
+        background-color: #dc3545;
+        color: #fff !important;
+        padding: 0.35rem 1rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .article-category:hover {
+        background-color: #bb2d3b;
+        transform: translateY(-2px);
+    }
+
+    .article-title {
+        font-weight: 800;
+        margin-bottom: 1rem;
+        text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
+        color: #fff;
+        transition: all 0.3s ease;
+        line-height: 1.2;
+    }
+
+    .article-link:hover .article-title {
+        color: #fff !important;
+        text-shadow: 0 0 10px rgba(220, 53, 69, 0.7);
+    }
+
+    .featured-article .article-title {
+        font-size: 3.5rem;
+        line-height: 1.15;
+        margin-bottom: 1.5rem;
+    }
+
+    .article-excerpt {
+        font-size: 1.15rem;
+        opacity: 0.9;
+        margin-bottom: 1.8rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        display: none;
+        color: #f8f9fa;
+        line-height: 1.6;
+    }
+
+    .article-meta {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .article-meta span {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .article-meta i {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    /* Secondary Articles Styles */
+    .secondary-articles {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        height: 100%;
+    }
+
+    .secondary-article {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        flex: 1;
+        position: relative;
+        background: #000;
+    }
+
+    .secondary-article:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .secondary-article .article-image-container {
+        height: 260px;
+    }
+
+    .secondary-article .article-title {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 0.75rem;
+    }
+
+    .secondary-article .article-content {
+        padding: 1.75rem;
+    }
+
+    .secondary-article .article-category {
+        margin-bottom: 0.85rem;
+        font-size: 0.7rem;
+        padding: 0.3rem 0.8rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1199px) {
+        .featured-article .article-title {
+            font-size: 3rem;
+        }
+        
+        .article-image-container {
+            height: 450px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .featured-article .article-title {
+            font-size: 2.5rem;
+        }
+        
+        .article-image-container {
+            height: 400px;
+        }
+        
+        .secondary-article .article-image-container {
+            height: 220px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .featured-article .article-title {
+            font-size: 2.2rem;
+        }
+        
+        .article-image-container {
+            height: 350px;
+        }
+        
+        .article-content {
+            padding: 2rem;
+        }
+        
+        .article-excerpt {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .featured-article .article-title {
+            font-size: 1.8rem;
+        }
+        
+        .article-image-container {
+            height: 300px;
+        }
+        
+        .secondary-article .article-image-container {
+            height: 200px;
+        }
+        
+        .article-content {
+            padding: 1.5rem;
+        }
+        
+        .article-meta {
+            gap: 0.75rem;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .featured-article, .secondary-article {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    .secondary-article:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    
+    .secondary-article:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+</style>
+
+
+===================================================================
+<div class="container my-5">
+        <div class="row g-4">
+            <?php if (!empty($recentArticles)): ?>
+                <!-- Main Featured Article -->
+                <div class="col-lg-8 col-md-12">
+                    <article class="featured-article">
+                        <?php
+                        // Get category slug - fallback to 'uncategorized' if not available
+                        $category_slug = !empty($recentArticles[0]['kategori']['slug_id']) ?
+                            $recentArticles[0]['kategori']['slug_id'] : (!empty($recentArticles[0]['kategori_slug']) ? $recentArticles[0]['kategori_slug'] : 'uncategorized');
+                        ?>
+                        <a href="<?= base_url($category_slug . '/' . $recentArticles[0]['slug_id']) ?>" class="article-link">
+                            <div class="article-image-container">
+                                <img src="<?= base_url(!empty($recentArticles[0]['thumbnail']) ? 'uploads/' . $recentArticles[0]['thumbnail'] : 'assets/img/default-thumbnail.jpg') ?>"
+                                    class="article-image"
+                                    alt="<?= htmlspecialchars($recentArticles[0]['judul_id'], ENT_QUOTES) ?>"
+                                    onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
+                            </div>
+
+                            <div class="article-content">
+                                <?php if (!empty($recentArticles[0]['kategori']['nama_kategori'])): ?>
+                                    <span class="article-category">
+                                        <a href="<?= base_url($category_slug) ?>">
+                                            <?= htmlspecialchars($recentArticles[0]['kategori']['nama_kategori'], ENT_QUOTES) ?>
+                                        </a>
+                                    </span>
+                                <?php endif; ?>
+
+                                <h2 class="article-title">
+                                    <?= htmlspecialchars($recentArticles[0]['judul_id'], ENT_QUOTES) ?>
+                                </h2>
+
+                                <p class="article-excerpt">
+                                    <?= !empty($recentArticles[0]['deskripsi_pendek']) ? htmlspecialchars($recentArticles[0]['deskripsi_pendek'], ENT_QUOTES) : '' ?>
+                                </p>
+
+                                <div class="article-meta">
+                                    <span class="author"><?= htmlspecialchars($recentArticles[0]['nama_lengkap'], ENT_QUOTES) ?></span>
+                                    <span class="publish-date"><?= date('d F Y', strtotime($recentArticles[0]['published_at'])) ?></span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+
+                <!-- Secondary Articles -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="secondary-articles">
+                        <?php for ($i = 1; $i <= min(2, count($recentArticles) - 1); $i++): ?>
+                            <?php
+                            // Get category slug for each article
+                            $category_slug = !empty($recentArticles[$i]['kategori']['slug_id']) ?
+                                $recentArticles[$i]['kategori']['slug_id'] : (!empty($recentArticles[$i]['kategori_slug']) ? $recentArticles[$i]['kategori_slug'] : 'uncategorized');
+                            ?>
+                            <article class="secondary-article">
+                                <a href="<?= base_url($category_slug . '/' . $recentArticles[$i]['slug_id']) ?>" class="article-link">
+                                    <div class="article-image-container">
+                                        <img src="<?= base_url(!empty($recentArticles[$i]['thumbnail']) ? 'uploads/' . $recentArticles[$i]['thumbnail'] : 'assets/img/default-thumbnail.jpg') ?>"
+                                            class="article-image"
+                                            alt="<?= htmlspecialchars($recentArticles[$i]['judul_id'], ENT_QUOTES) ?>"
+                                            onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
+                                    </div>
+
+                                    <div class="article-content">
+                                        <?php if (!empty($recentArticles[$i]['kategori']['nama_kategori'])): ?>
+                                            <span class="article-category">
+                                                <a href="<?= base_url($category_slug) ?>">
+                                                    <?= htmlspecialchars($recentArticles[$i]['kategori']['nama_kategori'], ENT_QUOTES) ?>
+                                                </a>
+                                            </span>
+                                        <?php endif; ?>
+
+                                        <h3 class="article-title">
+                                            <?= htmlspecialchars($recentArticles[$i]['judul_id'], ENT_QUOTES) ?>
+                                        </h3>
+
+                                        <div class="article-meta">
+                                            <span class="author"><?= htmlspecialchars($recentArticles[$i]['nama_lengkap'], ENT_QUOTES) ?></span>
+                                            <span class="publish-date"><?= date('d F Y', strtotime($recentArticles[$i]['published_at'])) ?></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+                        <?php endfor; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="col-12">
+                    <div class="alert alert-info">Tidak ada artikel baru dalam 4 jam terakhir.</div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <style>
+        /* === General === */
+        .featured-article,
+        .secondary-article {
+            height: 100%;
+            border-radius: 0;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .featured-article:hover,
+        .secondary-article:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .article-link {
+            display: block;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* === Image === */
+        .article-image-container {
+            height: 500px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1);
+            opacity: 0.9;
+        }
+
+        .article-link:hover .article-image {
+            transform: scale(1.08);
+            opacity: 0.8;
+        }
+
+        /* === Content === */
+        .article-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3) 70%, transparent);
+            color: #fff;
+        }
+
+        .article-category {
+            display: inline-block;
+            background-color: #dc3545;
+            color: #fff !important;
+            padding: 0.35rem 1rem;
+            border-radius: 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .article-category:hover {
+            background-color: #bb2d3b;
+            transform: translateY(-2px);
+        }
+
+        .article-title {
+            font-weight: 800;
+            text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
+            line-height: 1.2;
+            transition: all 0.3s ease;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .article-link:hover .article-title {
+            color: #fff !important;
+            text-shadow: 0 0 10px rgba(220, 53, 69, 0.7);
+        }
+
+        .featured-article .article-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-excerpt {
+            font-size: 1.15rem;
+            color: #f8f9fa;
+            opacity: 0.9;
+            display: none;
+            margin-bottom: 1.8rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+        }
+
+        .article-meta {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* === Secondary Articles === */
+        .secondary-articles {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            /* margin-top: 2rem; */
+        }
+
+        .secondary-article .article-image-container {
+            height: 260px;
+        }
+
+        .secondary-article .article-content {
+            padding: 1.75rem;
+        }
+
+        .secondary-article .article-title {
+            font-size: 1.5rem;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+        }
+
+        .secondary-article .article-category {
+            font-size: 0.7rem;
+            padding: 0.3rem 0.8rem;
+            margin-bottom: 0.85rem;
+        }
+
+        /* === Responsive === */
+        @media (max-width: 1199px) {
+            .featured-article .article-title {
+                font-size: 3rem;
+            }
+
+            .article-image-container {
+                height: 450px;
+            }
+
+            .secondary-articles {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .featured-article .article-title {
+                font-size: 2.5rem;
+            }
+
+            .article-image-container {
+                height: 400px;
+            }
+
+            .secondary-articles {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+                margin-top: 2rem;
+            }
+
+            .secondary-article .article-image-container {
+                height: 220px;
+            }
+
+            .article-excerpt {
+                display: block;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .featured-article .article-title {
+                font-size: 2.2rem;
+            }
+
+            .article-image-container {
+                height: 350px;
+            }
+
+            .article-content {
+                padding: 2rem;
+            }
+
+            .article-excerpt {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .secondary-articles {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .featured-article .article-title {
+                font-size: 1.8rem;
+            }
+
+            .article-image-container {
+                height: 300px;
+            }
+
+            .secondary-article .article-image-container {
+                height: 200px;
+            }
+
+            .article-content {
+                padding: 1.5rem;
+            }
+
+            .article-meta {
+                gap: 0.75rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .featured-article .article-title {
+                font-size: 1.6rem;
+            }
+
+            .article-image-container {
+                height: 250px;
+            }
+
+            .article-content {
+                padding: 1.25rem;
+            }
+
+            .article-excerpt {
+                display: none;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .secondary-articles {
+                gap: 1.2rem;
+            }
+        }
+
+        /* === Animation === */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .secondary-article:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .secondary-article:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+    </style>
+
+
+    ======================================
+    <div class="container">
+        <!-- row -->
+        <div id="hot-post" class="row hot-post">
+            <?php if (!empty($latestArticles)): ?>
+                <div class="col-md-8 hot-post-left">
+                    <!-- post -->
+                    <div class="post post-thumb">
+                        <a class="post-img" href="/<?= $latestArticles[0]['kategori']['slug_id']; ?>/<?= $latestArticles[0]['slug_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $latestArticles[0]['thumbnail']); ?>" alt="<?= $latestArticles[0]['judul_id']; ?>">
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                <a href="/kategori/<?= $latestArticles[0]['kategori']['slug_id']; ?>"><?= $latestArticles[0]['kategori']['nama_kategori_id']; ?></a>
+                            </div>
+                            <h3 class="post-title title-lg">
+                                <a href="/<?= $latestArticles[0]['kategori']['slug_id']; ?>/<?= $latestArticles[0]['slug_id']; ?>"><?= $latestArticles[0]['judul_id']; ?></a>
+                            </h3>
+                            <ul class="post-meta">
+                                <li><?= date('d F Y', strtotime($latestArticles[0]['published_at'])); ?></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /post -->
+                </div>
+
+                <?php if (count($latestArticles) > 1): ?>
+                    <div class="col-md-4 hot-post-right">
+                        <!-- post -->
+                        <div class="post post-thumb">
+                            <a class="post-img" href="/<?= $latestArticles[1]['kategori']['slug_id']; ?>/<?= $latestArticles[1]['slug_id']; ?>">
+                                <img src="<?= base_url('uploads/' . $latestArticles[1]['thumbnail']); ?>" alt="<?= $latestArticles[1]['judul_id']; ?>">
+                            </a>
+                            <div class="post-body">
+                                <div class="post-category">
+                                    <a href="/kategori/<?= $latestArticles[1]['kategori']['slug_id']; ?>"><?= $latestArticles[1]['kategori']['nama_kategori_id']; ?></a>
+                                </div>
+                                <h3 class="post-title">
+                                    <a href="/<?= $latestArticles[1]['kategori']['slug_id']; ?>/<?= $latestArticles[1]['slug_id']; ?>"><?= $latestArticles[1]['judul_id']; ?></a>
+                                </h3>
+                                <ul class="post-meta">
+                                    <li><?= date('d F Y', strtotime($latestArticles[1]['published_at'])); ?></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /post -->
+
+                        <?php if (count($latestArticles) > 2): ?>
+                            <!-- post -->
+                            <div class="post post-thumb">
+                                <a class="post-img" href="/<?= $latestArticles[2]['kategori']['slug_id']; ?>/<?= $latestArticles[2]['slug_id']; ?>">
+                                    <img src="<?= base_url('uploads/' . $latestArticles[2]['thumbnail']); ?>" alt="<?= $latestArticles[2]['judul_id']; ?>">
+                                </a>
+                                <div class="post-body">
+                                    <div class="post-category">
+                                        <a href="/kategori/<?= $latestArticles[2]['kategori']['slug_id']; ?>"><?= $latestArticles[2]['kategori']['nama_kategori_id']; ?></a>
+                                    </div>
+                                    <h3 class="post-title">
+                                        <a href="/<?= $latestArticles[2]['kategori']['slug_id']; ?>/<?= $latestArticles[2]['slug_id']; ?>"><?= $latestArticles[2]['judul_id']; ?></a>
+                                    </h3>
+                                    <ul class="post-meta">
+                                        <li><?= date('d F Y', strtotime($latestArticles[2]['published_at'])); ?></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /post -->
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+        <!-- /row -->
+    </div>
