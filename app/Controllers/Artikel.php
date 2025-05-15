@@ -62,6 +62,16 @@ class Artikel extends BaseController
             // ];
         }
 
+        $popularArticles = $this->artikelModel
+            ->where('published_at <=', date('Y-m-d H:i:s'))
+            ->orderBy('views', 'DESC')
+            ->orderBy('published_at', 'DESC')
+            ->findAll(4);
+
+        foreach ($popularArticles as &$article) {
+            $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
+        }
+
         $meta = $this->kategoriModel->getMetaOnly($kategoriSlug);
 
         // dd($meta);
@@ -71,7 +81,8 @@ class Artikel extends BaseController
             'kategori' => $kategori,
             'artikels' => $artikels,
             'categories' => $categories,
-            'allKategoris' => $kategoriWithCount
+            'allKategoris' => $kategoriWithCount,
+            'popularArticles' => $popularArticles
         ];
 
         return view('artikel/kategori', $data);
@@ -100,17 +111,6 @@ class Artikel extends BaseController
                 'count' => $count
             ];
         }
-
-        $popularArticles = $this->artikelModel
-            ->where('published_at <=', date('Y-m-d H:i:s'))
-            ->orderBy('views', 'DESC')
-            ->orderBy('published_at', 'DESC')
-            ->findAll(4);
-
-        foreach ($popularArticles as &$article) {
-            $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
-        }
-
 
         $kategoriWithCount = [];
         foreach ($kategoris as $kg) {
@@ -141,16 +141,6 @@ class Artikel extends BaseController
                 'kategori' => $kg,
                 'count' => $count
             ];
-        }
-
-        $popularArticles = $this->artikelModel
-            ->where('published_at <=', date('Y-m-d H:i:s'))
-            ->orderBy('views', 'DESC')
-            ->orderBy('published_at', 'DESC')
-            ->findAll(4);
-
-        foreach ($popularArticles as &$article) {
-            $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
         }
 
         $meta = $this->artikelModel->getMetaOnly($artikelSlug, $kategori['id_kategori']);

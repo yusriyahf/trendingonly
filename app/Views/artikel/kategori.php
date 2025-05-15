@@ -292,55 +292,27 @@
                     <div class="section-title">
                         <h2 class="title">Popular Posts</h2>
                     </div>
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="#"><img src="./img/widget-3.jpg" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="#">Lifestyle</a>
+                    <?php foreach ($popularArticles as $article): ?>
+                        <!-- post -->
+                        <div class="post post-widget">
+                            <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
+                                <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>">
+                            </a>
+                            <div class="post-body">
+                                <div class="post-category">
+                                    <a href="<?= base_url($article['kategori']['slug_id']) ?>">
+                                        <?= $article['kategori']['nama_kategori_id'] ?>
+                                    </a>
+                                </div>
+                                <h3 class="post-title">
+                                    <a href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
+                                        <?= $article['judul_id'] ?>
+                                    </a>
+                                </h3>
                             </div>
-                            <h3 class="post-title"><a href="#">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
                         </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="#"><img src="./img/widget-2.jpg" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="#">Technology</a>
-                                <a href="#">Lifestyle</a>
-                            </div>
-                            <h3 class="post-title"><a href="#">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="#"><img src="./img/widget-4.jpg" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="#">Health</a>
-                            </div>
-                            <h3 class="post-title"><a href="#">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="post post-widget">
-                        <a class="post-img" href="#"><img src="./img/widget-5.jpg" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-category">
-                                <a href="#">Health</a>
-                                <a href="#">Lifestyle</a>
-                            </div>
-                            <h3 class="post-title"><a href="#">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-                        </div>
-                    </div>
-                    <!-- /post -->
+                        <!-- /post -->
+                    <?php endforeach; ?>
                 </div>
                 <!-- /post widget -->
 

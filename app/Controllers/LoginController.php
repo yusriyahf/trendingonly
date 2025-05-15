@@ -44,6 +44,18 @@ class LoginController extends BaseController
                     'logged_in' => TRUE
                 ]);
                 return redirect()->to(base_url('penulis/dashboard'));
+            } else if (($dataUser['role'] === 'admin') &&
+                password_verify($password, $dataUser['password'])
+            ) {
+
+                session()->set([
+                    'username' => $dataUser['username'],
+                    'nama_lengkap' => $dataUser['nama_lengkap'],
+                    'id_user' => $dataUser['id_user'],
+                    'role' => $dataUser['role'], // Tambahkan role ke session
+                    'logged_in' => TRUE
+                ]);
+                return redirect()->to(base_url('admin/dashboard'));
             } else {
                 // Jika role tidak sesuai atau password salah
                 session()->setFlashdata('error', 'Username & Password Salah atau Anda tidak memiliki akses');
