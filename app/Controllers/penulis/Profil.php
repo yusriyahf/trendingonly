@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Controllers\penulis;
 
 use App\Models\ProfilModel;
 use App\Models\SliderModel;
@@ -9,14 +9,14 @@ use App\Models\UserModel;
 class Profil extends BaseController
 {
     protected $model;
-    protected $user_id;
+    protected $id_user;
     protected $user;
 
     public function __construct()
     {
         $this->model = new UserModel();
-        $this->user_id = session()->get('id_user');
-        $this->user = $this->model->find($this->user_id);
+        $this->id_user = session()->get('id_user');
+        $this->user = $this->model->find($this->id_user);
     }
 
     public function index()
@@ -29,7 +29,7 @@ class Profil extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Pengguna tidak ditemukan');
         }
 
-        return view('admin/profil/index', [
+        return view('penulis/profil/edit', [
             'user' => $this->user,
             'validation' => \Config\Services::validation()
         ]);
@@ -43,7 +43,7 @@ class Profil extends BaseController
 
         // Validasi input
         $rules = [
-            'username' => 'required|min_length[5]|max_length[20]|is_unique[users.username]'
+            'username' => 'required|min_length[5]|max_length[20]|is_unique[tb_users.username]'
         ];
 
         if (!$this->validate($rules)) {
@@ -54,7 +54,7 @@ class Profil extends BaseController
 
         $newUsername = $this->request->getPost("username");
 
-        $this->model->update($this->user_id, [
+        $this->model->update($this->id_user, [
             'username' => $newUsername,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -82,7 +82,7 @@ class Profil extends BaseController
 
         $newNama = $this->request->getPost("nama_lengkap");
 
-        $this->model->update($this->user_id, [
+        $this->model->update($this->id_user, [
             'nama_lengkap' => $newNama,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -123,7 +123,7 @@ class Profil extends BaseController
             unlink(ROOTPATH . 'public/uploads/penulis/' . $this->user['foto_profil']);
         }
 
-        $this->model->update($this->user_id, [
+        $this->model->update($this->id_user, [
             'foto_profil' => $newName,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
@@ -159,7 +159,7 @@ class Profil extends BaseController
 
         // Update password baru
         $newPassword = password_hash($this->request->getPost("password_baru"), PASSWORD_DEFAULT);
-        $this->model->update($this->user_id, ['password' => $newPassword]);
+        $this->model->update($this->id_user, ['password' => $newPassword]);
 
         session()->setFlashdata('success', 'Password berhasil diperbarui');
         return redirect()->to(base_url('penulis/profil'));

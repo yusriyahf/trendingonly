@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="app-card-body px-4 w-100">
-                        <form action="<?= base_url('admin/profil/update-username'); ?>" method="post">
+                        <form action="<?= base_url('penulis/profil/update-username'); ?>" method="post">
                             <?= csrf_field(); ?>
 
                             <div class="mb-3">
@@ -58,7 +58,7 @@
 
                         <hr class="my-4">
 
-                        <form action="<?= base_url('admin/profil/update-nama'); ?>" method="post">
+                        <form action="<?= base_url('penulis/profil/update-nama'); ?>" method="post">
                             <?= csrf_field(); ?>
 
                             <div class="mb-3">
@@ -109,7 +109,7 @@
                             <?php endif; ?>
                         </div>
 
-                        <form action="<?= base_url('admin/profil/update-foto'); ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= base_url('penulis/profil/update-foto'); ?>" method="post" enctype="multipart/form-data">
                             <?= csrf_field(); ?>
 
                             <div class="mb-3">
@@ -149,7 +149,7 @@
                     </div>
 
                     <div class="app-card-body px-4 w-100">
-                        <form action="<?= base_url('admin/profil/update-password'); ?>" method="post">
+                        <form action="<?= base_url('penulis/profil/update-password'); ?>" method="post">
                             <?= csrf_field(); ?>
 
                             <div class="mb-3">

@@ -45,20 +45,14 @@ $routes->get('penulis/berita/delete/(:any)', 'penulis\BeritaController::delete/$
 
 
 
-$routes->get('penulis/profil', 'Penulis\ProfilController::index');
-$routes->post('penulis/profil/update-username', 'Penulis\ProfilController::updateUsername');
-$routes->post('penulis/profil/update-nama', 'Penulis\ProfilController::updateNamaLengkap');
-$routes->post('penulis/profil/update-foto', 'Penulis\ProfilController::updateFotoProfil');
-$routes->post('penulis/profil/update-password', 'Penulis\ProfilController::updatePassword');
-
-
+$routes->get('penulis/profil', 'penulis\Profil::index');
+$routes->post('penulis/profil/update-username', 'penulis\Profil::updateUsername');
+$routes->post('penulis/profil/update-nama', 'penulis\Profil::updateNamaLengkap');
+$routes->post('penulis/profil/update-foto', 'penulis\Profil::updateFotoProfil');
+$routes->post('penulis/profil/update-password', 'penulis\Profil::updatePassword');
 
 
 $routes->get('admin/dashboard', 'admin\DashboardController::index');
-
-// ADMIN PROFILE
-$routes->get('admin/profil/edit', 'admin\Profil::edit');
-$routes->post('admin/profil/proses_edit', 'admin\Profil::proses_edit');
 
 // ADMIN CATEGORY ARTICLES
 $routes->get('admin/kategoriArtikel/index', 'admin\KategoriArtikel::index');
