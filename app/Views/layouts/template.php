@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= session()->get('lang') ?? 'id'; ?>">
 
 <head>
     <meta charset="utf-8">
@@ -22,6 +22,7 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>" />
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 
 </head>
 

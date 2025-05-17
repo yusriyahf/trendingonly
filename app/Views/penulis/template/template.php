@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Admin</title>
+    <title>Penulis</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -18,6 +18,7 @@
     <!-- App CSS -->
     <link id="theme-style" rel="stylesheet" href="<?= base_url('assets/penulis/css/portal.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <!-- test -->
     <!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
     <script src="<?= base_url('assets/penulis/js/tinymce.min.js') ?>"></script>

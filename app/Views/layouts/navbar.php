@@ -13,7 +13,7 @@
 
             <!-- logo -->
             <div class="nav-logo">
-                <a href="index.html" class="logo"><img src="<?= base_url('assets/./img/logo.png'); ?>" alt=""></a>
+                <a href="index.html" class="logo"><img src="<?= base_url('assets/Trending only.png'); ?>" alt=""></a>
             </div>
             <!-- /logo -->
 

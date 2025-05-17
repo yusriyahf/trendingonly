@@ -3,7 +3,7 @@
     <div class="sidepanel-inner d-flex flex-column">
         <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
         <div class="app-branding">
-            <a class="app-logo" href="<?= base_url('penulis/dashboard') ?>"><img class="logo-icon me-2" src="<?= base_url('Trending Only.png') ?>" style="width: auto;" alt="logo"></a>
+            <a class="app-logo" href="<?= base_url('penulis/dashboard') ?>"><img class="logo-icon me-2" src="<?= base_url('assets/Trending only.png') ?>" style="width: auto;" alt="logo"></a>
         </div><!--//app-branding-->
 
         <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">

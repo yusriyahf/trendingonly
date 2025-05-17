@@ -17,69 +17,71 @@ $routes->get('/blog-post', 'Home::blog');
 
 
 
-//penulis
+// Public routes (tanpa auth)
 $routes->get('login', 'LoginController::index');
 $routes->post('login/process', 'LoginController::process');
 $routes->get('logout', 'LoginController::logout');
 
-$routes->get('penulis/dashboard', 'penulis\DashboardController::index');
+// Group untuk penulis
+$routes->group('penulis', ['filter' => 'auth:penulis'], function ($routes) {
+  $routes->get('dashboard', 'penulis\DashboardController::index');
 
-$routes->get('penulis/profil/edit', 'penulis\Profil::edit');
-$routes->post('penulis/profil/proses_edit', 'penulis\Profil::proses_edit');
+  $routes->get('profil', 'penulis\Profil::index');
+  $routes->get('profil/edit', 'penulis\Profil::edit');
+  $routes->post('profil/proses_edit', 'penulis\Profil::proses_edit');
 
-// ADMIN CATEGORY ARTICLES
-$routes->get('penulis/kategoriArtikel/index', 'penulis\KategoriArtikel::index');
-$routes->get('penulis/kategoriArtikel/tambah', 'penulis\KategoriArtikel::tambah');
-$routes->post('penulis/kategoriArtikel/proses_tambah', 'penulis\KategoriArtikel::proses_tambah');
-$routes->get('penulis/kategoriArtikel/edit/(:num)', 'penulis\KategoriArtikel::edit/$1');
-$routes->post('penulis/kategoriArtikel/proses_edit/(:num)', 'penulis\KategoriArtikel::proses_edit/$1');
-$routes->get('penulis/kategoriArtikel/delete/(:any)', 'penulis\KategoriArtikel::delete/$1');
+  // Kategori Artikel
+  $routes->get('kategoriArtikel/index', 'penulis\KategoriArtikel::index');
+  $routes->get('kategoriArtikel/tambah', 'penulis\KategoriArtikel::tambah');
+  $routes->post('kategoriArtikel/proses_tambah', 'penulis\KategoriArtikel::proses_tambah');
+  $routes->get('kategoriArtikel/edit/(:num)', 'penulis\KategoriArtikel::edit/$1');
+  $routes->post('kategoriArtikel/proses_edit/(:num)', 'penulis\KategoriArtikel::proses_edit/$1');
+  $routes->get('kategoriArtikel/delete/(:any)', 'penulis\KategoriArtikel::delete/$1');
 
-// ADMIN ARTICLES
-$routes->get('penulis/berita/index', 'penulis\BeritaController::index');
-$routes->get('penulis/berita/tambah', 'penulis\BeritaController::tambah');
-$routes->post('penulis/berita/proses_tambah', 'penulis\BeritaController::proses_tambah');
-$routes->get('penulis/berita/edit/(:num)', 'penulis\BeritaController::edit/$1');
-$routes->post('penulis/berita/proses_edit/(:num)', 'penulis\BeritaController::proses_edit/$1');
-$routes->get('penulis/berita/delete/(:any)', 'penulis\BeritaController::delete/$1');
+  // Berita
+  $routes->get('berita/index', 'penulis\BeritaController::index');
+  $routes->get('berita/tambah', 'penulis\BeritaController::tambah');
+  $routes->post('berita/proses_tambah', 'penulis\BeritaController::proses_tambah');
+  $routes->get('berita/edit/(:num)', 'penulis\BeritaController::edit/$1');
+  $routes->post('berita/proses_edit/(:num)', 'penulis\BeritaController::proses_edit/$1');
+  $routes->get('berita/delete/(:any)', 'penulis\BeritaController::delete/$1');
 
+  // Update Profil
+  $routes->post('profil/update-username', 'penulis\Profil::updateUsername');
+  $routes->post('profil/update-nama', 'penulis\Profil::updateNamaLengkap');
+  $routes->post('profil/update-foto', 'penulis\Profil::updateFotoProfil');
+  $routes->post('profil/update-password', 'penulis\Profil::updatePassword');
+});
 
+// Group untuk admin
+$routes->group('admin', ['filter' => 'auth:admin'], function ($routes) {
+  $routes->get('dashboard', 'admin\DashboardController::index');
 
-$routes->get('penulis/profil', 'penulis\Profil::index');
-$routes->post('penulis/profil/update-username', 'penulis\Profil::updateUsername');
-$routes->post('penulis/profil/update-nama', 'penulis\Profil::updateNamaLengkap');
-$routes->post('penulis/profil/update-foto', 'penulis\Profil::updateFotoProfil');
-$routes->post('penulis/profil/update-password', 'penulis\Profil::updatePassword');
+  // Kategori Artikel
+  $routes->get('kategoriArtikel/index', 'admin\KategoriArtikel::index');
+  $routes->get('kategoriArtikel/tambah', 'admin\KategoriArtikel::tambah');
+  $routes->post('kategoriArtikel/proses_tambah', 'admin\KategoriArtikel::proses_tambah');
+  $routes->get('kategoriArtikel/edit/(:num)', 'admin\KategoriArtikel::edit/$1');
+  $routes->post('kategoriArtikel/proses_edit/(:num)', 'admin\KategoriArtikel::proses_edit/$1');
+  $routes->get('kategoriArtikel/delete/(:any)', 'admin\KategoriArtikel::delete/$1');
 
+  // Artikel
+  $routes->get('artikel/index', 'admin\ArtikelController::index');
+  $routes->get('artikel/tambah', 'admin\ArtikelController::tambah');
+  $routes->post('artikel/proses_tambah', 'admin\ArtikelController::proses_tambah');
+  $routes->get('artikel/edit/(:num)', 'admin\ArtikelController::edit/$1');
+  $routes->post('artikel/proses_edit/(:num)', 'admin\ArtikelController::proses_edit/$1');
+  $routes->get('artikel/delete/(:any)', 'admin\ArtikelController::delete/$1');
+  $routes->get('artikel/set_approval/(:num)/(:any)', 'Admin\ArtikelController::set_approval/$1/$2');
 
-$routes->get('admin/dashboard', 'admin\DashboardController::index');
-
-// ADMIN CATEGORY ARTICLES
-$routes->get('admin/kategoriArtikel/index', 'admin\KategoriArtikel::index');
-$routes->get('admin/kategoriArtikel/tambah', 'admin\KategoriArtikel::tambah');
-$routes->post('admin/kategoriArtikel/proses_tambah', 'admin\KategoriArtikel::proses_tambah');
-$routes->get('admin/kategoriArtikel/edit/(:num)', 'admin\KategoriArtikel::edit/$1');
-$routes->post('admin/kategoriArtikel/proses_edit/(:num)', 'admin\KategoriArtikel::proses_edit/$1');
-$routes->get('admin/kategoriArtikel/delete/(:any)', 'admin\KategoriArtikel::delete/$1');
-
-// ADMIN ARTICLES
-$routes->get('admin/artikel/index', 'admin\ArtikelController::index');
-$routes->get('admin/artikel/tambah', 'admin\ArtikelController::tambah');
-$routes->post('admin/artikel/proses_tambah', 'admin\ArtikelController::proses_tambah');
-$routes->get('admin/artikel/edit/(:num)', 'admin\ArtikelController::edit/$1');
-$routes->post('admin/artikel/proses_edit/(:num)', 'admin\ArtikelController::proses_edit/$1');
-$routes->get('admin/artikel/delete/(:any)', 'admin\ArtikelController::delete/$1');
-
-$routes->get('admin/penulis/index', 'admin\PenulisController::index');
-$routes->get('admin/penulis/tambah', 'admin\PenulisController::tambah');
-$routes->post('admin/penulis/proses_tambah', 'admin\PenulisController::proses_tambah');
-$routes->get('admin/penulis/edit/(:num)', 'admin\PenulisController::edit/$1');
-$routes->post('admin/penulis/proses_edit/(:num)', 'admin\PenulisController::proses_edit/$1');
-$routes->get('admin/penulis/delete/(:any)', 'admin\PenulisController::delete/$1');
-
-//is_approved
-$routes->get('admin/artikel/set_approval/(:num)/(:any)', 'Admin\ArtikelController::set_approval/$1/$2');
-
+  // Manajemen Penulis
+  $routes->get('penulis/index', 'admin\PenulisController::index');
+  $routes->get('penulis/tambah', 'admin\PenulisController::tambah');
+  $routes->post('penulis/proses_tambah', 'admin\PenulisController::proses_tambah');
+  $routes->get('penulis/edit/(:num)', 'admin\PenulisController::edit/$1');
+  $routes->post('penulis/proses_edit/(:num)', 'admin\PenulisController::proses_edit/$1');
+  $routes->get('penulis/delete/(:any)', 'admin\PenulisController::delete/$1');
+});
 
 $routes->get('/', 'Beranda::index');
 $routes->get('(:segment)', 'Artikel::kategori/$1');
