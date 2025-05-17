@@ -724,7 +724,7 @@ textarea.input {
   right: 0;
   background: #fff;
   min-width: 120px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   display: none;
 }
@@ -982,12 +982,6 @@ textarea.input {
 .post.post-thumb .post-meta li a:focus {
   color: #ee4266;
 }
-
-
-
-
-
-
 
 /*----------------------------*\
 	post small
@@ -1606,6 +1600,35 @@ textarea.input {
     display: inline-block;
     float: left;
   }
+
+  .nav-logo img {
+    width: 100%;
+    height: auto;
+    max-width: 145px; /* ukuran default untuk mobile */
+  }
+
+  @media (min-width: 458px) and (max-width: 768px) {
+    .nav-logo img {
+    width: 165px;
+    }
+  }
+
+  /* Untuk tablet (min-width: 768px dan max-width: 1023px) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .nav-logo img {
+      max-width: 190px;
+    }
+  }
+
+  /* Untuk desktop (min-width: 1024px) */
+  @media (min-width: 1024px) {
+    .nav-logo img {
+      max-width: 200px !important; 
+      height: 20px;
+      width: 20px;
+    }
+  }
+
   .footer-nav {
     text-align: left;
     margin-bottom: 30px;
