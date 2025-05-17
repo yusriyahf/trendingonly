@@ -10,14 +10,26 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (!session()->get('isLoggedIn')) {
+        $session = session();
+
+        // Jika belum login
+        if (!$session->get('logged_in')) {
             return redirect()->to('/login');
         }
 
-        // Cek role jika diperlukan
-        if (isset($arguments)) {
-            if (!in_array(session()->get('role'), $arguments)) {
-                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        // Jika membutuhkan role tertentu
+        if (!empty($arguments)) {
+            $role = $session->get('role');
+
+            if (!in_array($role, $arguments)) {
+                if ($role === 'admin') {
+                    return redirect()->to('/admin/dashboard');
+                } elseif ($role === 'penulis') {
+                    return redirect()->to('/penulis/dashboard');
+                }
+
+                // Logout jika role tidak valid
+                return redirect()->to('/logout');
             }
         }
     }

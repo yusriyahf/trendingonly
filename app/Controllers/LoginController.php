@@ -11,12 +11,10 @@ class LoginController extends BaseController
 {
     public function index()
     {
-        // Pengecekan jika pengguna sudah login
         if (session()->get('logged_in')) {
-            return redirect()->to(base_url('penulis/dashboard')); // Ubah 'vw_home' sesuai dengan halaman yang diinginkan setelah login
+            $dashboard = session()->get('role') === 'admin' ? 'admin/dashboard' : 'penulis/dashboard';
+            return redirect()->to(base_url($dashboard));
         }
-
-        // Proses login jika pengguna belum login
         return view('penulis/login/index');
     }
 

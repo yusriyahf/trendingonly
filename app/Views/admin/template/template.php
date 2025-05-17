@@ -17,6 +17,7 @@
 
     <!-- App CSS -->
     <link id="theme-style" rel="stylesheet" href="<?= base_url('assets/admin/css/portal.css') ?>">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 
     <!-- test -->
     <!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
