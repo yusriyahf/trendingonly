@@ -42,11 +42,10 @@
             <ul class="nav-menu">
                 <li>
                     <a href="<?= base_url() ?>">Beranda</a>
-
                 </li>
 
                 <?php
-                // Ambil 3 kategori pertama
+                // Tampilkan 3 kategori utama
                 $topCategories = array_slice($allKategoris, 0, 3);
                 foreach ($topCategories as $item): ?>
                     <li><a href="<?= base_url($item['kategori']['slug_id']); ?>">
@@ -60,8 +59,10 @@
                         <div class="dropdown-body">
                             <div class="row">
                                 <?php
-                                // Bagi semua kategori menjadi 4 kolom
-                                $chunks = array_chunk($allKategoris, ceil(count($allKategoris) / 4));
+                                // Ambil semua kategori kecuali 3 pertama
+                                $remainingCategories = array_slice($allKategoris, 3);
+                                // Bagi menjadi 4 kolom
+                                $chunks = array_chunk($remainingCategories, ceil(count($remainingCategories) / 4));
                                 foreach ($chunks as $column): ?>
                                     <div class="col-md-3">
                                         <ul class="dropdown-list">
@@ -88,19 +89,32 @@
     <!-- Aside Nav -->
     <div id="nav-aside">
         <ul class="nav-aside-menu">
-            <li><a href="#">Home</a></li>
-            <li class="has-dropdown"><a>Categories</a>
+            <li><a href="<?= base_url() ?>">Beranda</a></li>
+
+            <?php
+            // Show the same top 3 categories as in main nav
+            $topCategories = array_slice($allKategoris, 0, 3);
+            foreach ($topCategories as $item): ?>
+                <li><a href="<?= base_url($item['kategori']['slug_id']); ?>">
+                        <?= $item['kategori']['nama_kategori_id'] ?>
+                    </a></li>
+            <?php endforeach; ?>
+
+            <li class="has-dropdown">
+                <a>Kategori Lainnya</a>
                 <ul class="dropdown">
-                    <li><a href="#">Lifestyle</a></li>
-                    <li><a href="#">Fashion</a></li>
-                    <li><a href="#">Technology</a></li>
-                    <li><a href="#">Travel</a></li>
-                    <li><a href="#">Health</a></li>
+                    <?php
+                    // Show all remaining categories in a single column
+                    $remainingCategories = array_slice($allKategoris, 3);
+                    foreach ($remainingCategories as $item): ?>
+                        <li>
+                            <a href="<?= base_url($item['kategori']['slug_id']) ?>">
+                                <?= $item['kategori']['nama_kategori_id'] ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contacts</a></li>
-            <li><a href="#">Advertise</a></li>
         </ul>
         <button class="nav-close nav-aside-close"><span></span></button>
     </div>

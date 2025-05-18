@@ -274,18 +274,28 @@
                         <?php foreach ($popularArticles as $article): ?>
                             <!-- post -->
                             <div class="post post-widget">
-                                <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                    <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>">
+                                <a class="post-img" href="<?= base_url(esc($article['kategori']['slug_id'] ?? '') . '/' . esc($article['slug_id'] ?? '')) ?>">
+                                    <?php
+                                    // Handle thumbnail dengan fallback default image
+                                    $thumbnail = (!empty($article['thumbnail']) && file_exists(FCPATH . 'uploads/' . $article['thumbnail']))
+                                        ? base_url('uploads/' . esc($article['thumbnail']))
+                                        : base_url('assets/img/default-thumbnail.jpg');
+                                    ?>
+                                    <img src="<?= $thumbnail ?>"
+                                        alt="<?= esc($article['judul_id'] ?? 'Judul tidak tersedia') ?>"
+                                        class="img-fluid"
+                                        style="max-height: 80px; object-fit: cover;"
+                                        onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="<?= base_url($article['kategori']['slug_id']) ?>">
-                                            <?= $article['kategori']['nama_kategori_id'] ?>
+                                        <a href="<?= base_url(esc($article['kategori']['slug_id'] ?? '')) ?>">
+                                            <?= esc($article['kategori']['nama_kategori_id'] ?? 'Uncategorized') ?>
                                         </a>
                                     </div>
-                                    <h3 class="post-title">
-                                        <a href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                            <?= $article['judul_id'] ?>
+                                    <h3 class="post-title" style="font-size: 14px; line-height: 1.4;">
+                                        <a href="<?= base_url(esc($article['kategori']['slug_id'] ?? '') . '/' . esc($article['slug_id'] ?? '')) ?>">
+                                            <?= esc($article['judul_id'] ?? 'Judul tidak tersedia') ?>
                                         </a>
                                     </h3>
                                 </div>
