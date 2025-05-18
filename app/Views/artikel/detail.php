@@ -46,10 +46,15 @@
 
                 <!-- post content -->
                 <div class="section-row">
+                    <?php if (!empty($artikel['gambar_besar'])): ?>
+                        <div class="featured-image-container" style="width: 100%; margin: 0 auto 20px;">
+                            <img src="<?= base_url('uploads/' . $artikel['gambar_besar']) ?>"
+                                alt="<?= esc($artikel['judul_id']) ?>"
+                                style="width: 100%; max-width: 100%; height: auto; max-height: 500px; display: block; margin: 0 auto;">
+                        </div>
+                    <?php endif; ?>
                     <h3><?= esc($artikel['judul_id']) ?></h3>
                     <p><?= esc($artikel['konten_id']) ?></p>
-
-
                 </div>
                 <!-- /post content -->
 
