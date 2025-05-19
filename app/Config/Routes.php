@@ -79,6 +79,11 @@ $routes->group('admin', ['filter' => 'auth:admin'], function ($routes) {
 });
 
 
+$routes->get('/', function () {
+    return redirect()->to('/id');
+});
+
+
 // USER TANPA LOGIN
 $routes->group('id', function ($routes) {
     $routes->get('/', 'Beranda::index');
