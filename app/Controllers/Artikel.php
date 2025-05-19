@@ -16,18 +16,34 @@ class Artikel extends BaseController
         $this->kategoriModel = new KategoriModel();
     }
 
-    public function kategori($kategoriSlug)
+    public function kategori($lang, $kategoriSlug)
     {
-        $lang = session()->get('lang') ?? 'id';
-        $categories = $this->kategoriModel->get_categories_with_thumbnails();
+        // Ambil bahasa dari segment URL pertama (misal: 'id' atau 'en')
+        $lang = service('uri')->getSegment(1) ?? 'id';
 
-
-        $kategoris = $this->kategoriModel->findAll();
-        $kategori = $this->kategoriModel->getBySlug($kategoriSlug);
+        // Ambil kategori berdasarkan slug dan bahasa
+        $kategori = $this->kategoriModel->getBySlug($kategoriSlug, $lang);
         if (!$kategori) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Kategori tidak ditemukan');
         }
 
+        $categorySlugCheck = ($lang === 'id') ? $kategori['slug_id'] : $kategori['slug_en'];
+
+        $canonical = base_url("$lang/" . ($categorySlugCheck !== false ? $categorySlugCheck : ''));
+
+
+        if (current_url() !== $canonical) {
+            return redirect()->to($canonical);
+        }
+
+
+        // Ambil semua kategori (tanpa thumbnail, untuk hitung artikel)
+        $kategoris = $this->kategoriModel->findAll();
+
+        // Ambil kategori dengan thumbnail (sekali panggil saja)
+        $categories = $this->kategoriModel->get_categories_with_thumbnails();
+
+        // Ambil artikel berdasarkan kategori id
         $artikels = $this->artikelModel->getByKategori($kategori['id_kategori']);
 
         $kategoriWithCount = [];
@@ -37,6 +53,7 @@ class Artikel extends BaseController
                 'kategori' => $kg,
                 'count' => $count
             ];
+
 
 
             // $artikel = $this->artikelModel->getLatestByKategori($kategori['id_kategori'], 3);
@@ -88,21 +105,34 @@ class Artikel extends BaseController
         return view('artikel/kategori', $data);
     }
 
-    public function detail($kategoriSlug, $artikelSlug)
+    public function detail($lang, $kategoriSlug, $artikelSlug)
     {
-        $lang = session()->get('lang') ?? 'id';
-
         $kategoris = $this->kategoriModel->findAll();
-        $kategori = $this->kategoriModel->getBySlug($kategoriSlug);
+
+        $kategori = $this->kategoriModel->getBySlug($kategoriSlug, $lang);
         if (!$kategori) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Kategori tidak ditemukan');
         }
 
-        $artikel = $this->artikelModel->getDetailArtikel($artikelSlug, $kategori['id_kategori']);
+        $artikel = $this->artikelModel->getDetailArtikel($artikelSlug, $kategori['id_kategori'], $lang);
         if (!$artikel) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Artikel tidak ditemukan');
         }
 
+        // Canonical redirect check
+        $correctKategoriSlug = $lang === 'en' ? strtolower($kategori['slug_en']) : strtolower($kategori['slug_id']);
+        $correctArtikelSlug = $lang === 'en' ? strtolower($artikel['slug_en']) : strtolower($artikel['slug_id']);
+
+        // Bandingkan dengan slug yang datang dari URL
+        if (
+            strtolower($kategoriSlug) !== $correctKategoriSlug ||
+            strtolower($artikelSlug) !== $correctArtikelSlug
+        ) {
+            $canonicalUrl = base_url("$lang/$correctKategoriSlug/$correctArtikelSlug");
+            return redirect()->to($canonicalUrl);
+        }
+
+        // Sidebar: kategori + jumlah artikel
         $kategoriWithCount = [];
         foreach ($kategoris as $kg) {
             $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
@@ -112,15 +142,10 @@ class Artikel extends BaseController
             ];
         }
 
-        $kategoriWithCount = [];
-        foreach ($kategoris as $kg) {
-            $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
-            $kategoriWithCount[] = [
-                'kategori' => $kg,
-                'count' => $count
-            ];
-        }
+        // Artikel terkait
+        $relatedArticles = $this->artikelModel->getRelatedArticles($artikel['id_artikel'], $kategori['id_kategori'], 3);
 
+        // Artikel populer
         $popularArticles = $this->artikelModel
             ->where('published_at <=', date('Y-m-d H:i:s'))
             ->orderBy('views', 'DESC')
@@ -131,30 +156,17 @@ class Artikel extends BaseController
             $article['kategori'] = $this->kategoriModel->find($article['id_kategori']);
         }
 
+        // Meta
         $meta = $this->artikelModel->getMetaOnly($artikelSlug, $kategori['id_kategori']);
 
-
-        $kategoriWithCount = [];
-        foreach ($kategoris as $kg) {
-            $count = $this->artikelModel->where('id_kategori', $kg['id_kategori'])->countAllResults();
-            $kategoriWithCount[] = [
-                'kategori' => $kg,
-                'count' => $count
-            ];
-        }
-
-        $meta = $this->artikelModel->getMetaOnly($artikelSlug, $kategori['id_kategori']);
-
-        $data = [
+        return view('artikel/detail', [
             'lang' => $lang,
             'meta' => $meta,
             'kategori' => $kategori,
             'artikel' => $artikel,
             'allKategoris' => $kategoriWithCount,
-            'allKategoris' => $kategoriWithCount,
-            'popularArticles' => $popularArticles
-        ];
-
-        return view('artikel/detail', $data);
+            'popularArticles' => $popularArticles,
+            'relatedArticles' => $relatedArticles,
+        ]);
     }
 }
