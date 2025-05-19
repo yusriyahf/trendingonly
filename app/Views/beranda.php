@@ -16,8 +16,6 @@
     $builder->where('tb_artikel.published_at >=', $fourHoursAgo);
     $builder->orderBy('tb_artikel.published_at', 'DESC');
     $recentArticles = $builder->get()->getResultArray();
-
-
     ?>
 
     <div class="container">
@@ -27,15 +25,19 @@
                 <div class="col-md-8 hot-post-left">
                     <!-- post -->
                     <div class="post post-thumb">
-                        <a class="post-img" href="/<?= $latestArticles[0]['kategori']['slug_id']; ?>/<?= $latestArticles[0]['slug_id']; ?>">
-                            <img src="<?= base_url('uploads/' . $latestArticles[0]['thumbnail']); ?>" alt="<?= $latestArticles[0]['judul_id']; ?>" alt="<?= $latestArticles[0]['judul_id']; ?>">
+                        <a class="post-img" href="/<?= $lang; ?>/<?= $lang === 'en' ? $latestArticles[0]['kategori']['slug_en'] : $latestArticles[0]['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $latestArticles[0]['slug_en'] : $latestArticles[0]['slug_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $latestArticles[0]['thumbnail']); ?>" alt="<?= $lang === 'en' ? $latestArticles[0]['judul_en'] : $latestArticles[0]['judul_id']; ?>">
                         </a>
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="/kategori/<?= $latestArticles[0]['kategori']['slug_id']; ?>"><?= $latestArticles[0]['kategori']['nama_kategori_id']; ?></a>
+                                <a href="/<?= $lang; ?>/kategori/<?= $lang === 'en' ? $latestArticles[0]['kategori']['slug_en'] : $latestArticles[0]['kategori']['slug_id']; ?>">
+                                    <?= $lang === 'en' ? $latestArticles[0]['kategori']['nama_kategori_en'] : $latestArticles[0]['kategori']['nama_kategori_id']; ?>
+                                </a>
                             </div>
                             <h3 class="post-title title-lg">
-                                <a href="/<?= $latestArticles[0]['kategori']['slug_id']; ?>/<?= $latestArticles[0]['slug_id']; ?>"><?= $latestArticles[0]['judul_id']; ?></a>
+                                <a href="/<?= $lang; ?>/<?= $lang === 'en' ? $latestArticles[0]['kategori']['slug_en'] : $latestArticles[0]['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $latestArticles[0]['slug_en'] : $latestArticles[0]['slug_id']; ?>">
+                                    <?= $lang === 'en' ? $latestArticles[0]['judul_en'] : $latestArticles[0]['judul_id']; ?>
+                                </a>
                             </h3>
                             <div class="article-meta">
                                 <span class="author"><?= htmlspecialchars($latestArticles[0]['nama_lengkap'] ?? '', ENT_QUOTES) ?></span>
@@ -50,15 +52,19 @@
                     <!-- post -->
                     <?php $secondArticle = count($latestArticles) > 1 ? $latestArticles[1] : $latestArticles[0]; ?>
                     <div class="post post-thumb">
-                        <a class="post-img" href="/<?= $secondArticle['kategori']['slug_id']; ?>/<?= $secondArticle['slug_id']; ?>">
-                            <img src="<?= base_url('uploads/' . $secondArticle['thumbnail']); ?>" alt="<?= $secondArticle['judul_id']; ?>" loading="lazy">
+                        <a class="post-img" href="/<?= $lang; ?>/<?= $lang === 'en' ? $secondArticle['kategori']['slug_en'] : $secondArticle['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $secondArticle['slug_en'] : $secondArticle['slug_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $secondArticle['thumbnail']); ?>" alt="<?= $lang === 'en' ? $secondArticle['judul_en'] : $secondArticle['judul_id']; ?>">
                         </a>
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="/kategori/<?= $secondArticle['kategori']['slug_id']; ?>"><?= $secondArticle['kategori']['nama_kategori_id']; ?></a>
+                                <a href="/<?= $lang; ?>/kategori/<?= $lang === 'en' ? $secondArticle['kategori']['slug_en'] : $secondArticle['kategori']['slug_id']; ?>">
+                                    <?= $lang === 'en' ? $secondArticle['kategori']['nama_kategori_en'] : $secondArticle['kategori']['nama_kategori_id']; ?>
+                                </a>
                             </div>
                             <h3 class="post-title">
-                                <a href="/<?= $secondArticle['kategori']['slug_id']; ?>/<?= $secondArticle['slug_id']; ?>"><?= $secondArticle['judul_id']; ?></a>
+                                <a href="/<?= $lang; ?>/<?= $lang === 'en' ? $secondArticle['kategori']['slug_en'] : $secondArticle['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $secondArticle['slug_en'] : $secondArticle['slug_id']; ?>">
+                                    <?= $lang === 'en' ? $secondArticle['judul_en'] : $secondArticle['judul_id']; ?>
+                                </a>
                             </h3>
                             <div class="article-meta">
                                 <span class="author"><?= htmlspecialchars($secondArticle['nama_lengkap'] ?? '', ENT_QUOTES) ?></span>
@@ -77,15 +83,19 @@
                             : $latestArticles[0]);
                     ?>
                     <div class="post post-thumb">
-                        <a class="post-img" href="/<?= $thirdArticle['kategori']['slug_id']; ?>/<?= $thirdArticle['slug_id']; ?>">
-                            <img src="<?= base_url('uploads/' . $thirdArticle['thumbnail']); ?>" alt="<?= $thirdArticle['judul_id']; ?>" loading="lazy">
+                        <a class="post-img" href="/<?= $lang; ?>/<?= $lang === 'en' ? $thirdArticle['kategori']['slug_en'] : $thirdArticle['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $thirdArticle['slug_en'] : $thirdArticle['slug_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $thirdArticle['thumbnail']); ?>" alt="<?= $lang === 'en' ? $thirdArticle['judul_en'] : $thirdArticle['judul_id']; ?>">
                         </a>
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="/kategori/<?= $thirdArticle['kategori']['slug_id']; ?>"><?= $thirdArticle['kategori']['nama_kategori_id']; ?></a>
+                                <a href="/<?= $lang; ?>/kategori/<?= $lang === 'en' ? $thirdArticle['kategori']['slug_en'] : $thirdArticle['kategori']['slug_id']; ?>">
+                                    <?= $lang === 'en' ? $thirdArticle['kategori']['nama_kategori_en'] : $thirdArticle['kategori']['nama_kategori_id']; ?>
+                                </a>
                             </div>
                             <h3 class="post-title">
-                                <a href="/<?= $thirdArticle['kategori']['slug_id']; ?>/<?= $thirdArticle['slug_id']; ?>"><?= $thirdArticle['judul_id']; ?></a>
+                                <a href="/<?= $lang; ?>/<?= $lang === 'en' ? $thirdArticle['kategori']['slug_en'] : $thirdArticle['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $thirdArticle['slug_en'] : $thirdArticle['slug_id']; ?>">
+                                    <?= $lang === 'en' ? $thirdArticle['judul_en'] : $thirdArticle['judul_id']; ?>
+                                </a>
                             </h3>
                             <div class="article-meta">
                                 <span class="author"><?= htmlspecialchars($thirdArticle['nama_lengkap'] ?? '', ENT_QUOTES) ?></span>
@@ -274,18 +284,28 @@
                         <?php foreach ($popularArticles as $article): ?>
                             <!-- post -->
                             <div class="post post-widget">
-                                <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                    <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>" loading="lazy">
+                                <a class="post-img" href="<?= base_url(esc($article['kategori']['slug_id'] ?? '') . '/' . esc($article['slug_id'] ?? '')) ?>">
+                                    <?php
+                                    // Handle thumbnail dengan fallback default image
+                                    $thumbnail = (!empty($article['thumbnail']) && file_exists(FCPATH . 'uploads/' . $article['thumbnail']))
+                                        ? base_url('uploads/' . esc($article['thumbnail']))
+                                        : base_url('assets/img/default-thumbnail.jpg');
+                                    ?>
+                                    <img src="<?= $thumbnail ?>"
+                                        alt="<?= esc($article['judul_id'] ?? 'Judul tidak tersedia') ?>"
+                                        class="img-fluid"
+                                        style="max-height: 80px; object-fit: cover;"
+                                        onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="<?= base_url($article['kategori']['slug_id']) ?>">
-                                            <?= $article['kategori']['nama_kategori_id'] ?>
+                                        <a href="<?= base_url(esc($article['kategori']['slug_id'] ?? '')) ?>">
+                                            <?= esc($article['kategori']['nama_kategori_id'] ?? 'Uncategorized') ?>
                                         </a>
                                     </div>
-                                    <h3 class="post-title">
-                                        <a href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                            <?= $article['judul_id'] ?>
+                                    <h3 class="post-title" style="font-size: 14px; line-height: 1.4;">
+                                        <a href="<?= base_url(esc($article['kategori']['slug_id'] ?? '') . '/' . esc($article['slug_id'] ?? '')) ?>">
+                                            <?= esc($article['judul_id'] ?? 'Judul tidak tersedia') ?>
                                         </a>
                                     </h3>
                                 </div>

@@ -5,16 +5,11 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-
 $routes->get('/category', 'Home::category');
 $routes->get('/contact', 'Home::contact');
 $routes->get('/author', 'Home::author');
 $routes->get('/about', 'Home::about');
 $routes->get('/blog-post', 'Home::blog');
-
-
-
-
 
 
 // Public routes (tanpa auth)
@@ -83,6 +78,22 @@ $routes->group('admin', ['filter' => 'auth:admin'], function ($routes) {
   $routes->get('penulis/delete/(:any)', 'admin\PenulisController::delete/$1');
 });
 
-$routes->get('/', 'Beranda::index');
-$routes->get('(:segment)', 'Artikel::kategori/$1');
-$routes->get('(:segment)/(:segment)', 'Artikel::detail/$1/$2');
+
+$routes->get('/', function () {
+    return redirect()->to('/id');
+});
+
+
+// USER TANPA LOGIN
+$routes->group('id', function ($routes) {
+    $routes->get('/', 'Beranda::index');
+    $routes->get('(:segment)', 'Artikel::kategori/id/$1');       // kirim lang 'id'
+    $routes->get('(:segment)/(:segment)', 'Artikel::detail/id/$1/$2');   // kirim lang 'id'
+});
+
+$routes->group('en', function ($routes) {
+    $routes->get('/', 'Beranda::index');
+    $routes->get('(:segment)', 'Artikel::kategori/en/$1');       // kirim lang 'en'
+    $routes->get('(:segment)/(:segment)', 'Artikel::detail/en/$1/$2');   // kirim lang 'en'
+});
+

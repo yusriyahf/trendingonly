@@ -54,14 +54,44 @@ class ArtikelModel extends Model
             ->findAll();
     }
 
-    public function getDetailArtikel($slug_id, $id_kategori)
+    public function getDetailArtikel($slug, $kategoriId, $lang)
+{
+    $slugColumn = $lang === 'en' ? 'slug_en' : 'slug_id';
+
+    $result = $this->select('tb_artikel.*, tb_users.nama_lengkap, tb_artikel.slug_id, tb_artikel.slug_en')
+        ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user', 'left')
+        ->where("tb_artikel.$slugColumn", $slug)
+        ->where('tb_artikel.id_kategori', $kategoriId)
+        ->first();
+
+    log_message('debug', "getDetailArtikel($slug, $kategoriId, $lang) => " . json_encode($result));
+
+    return $result;
+}
+
+
+
+    // Artikel terkait (kategori sama, kecuali artikel ini)
+    public function getRelatedArticles($artikelId, $kategoriId, $limit = 3)
     {
-        return $this->select('tb_artikel.*, tb_users.nama_lengkap')
-            ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user', 'left')
-            ->where('slug_id', $slug_id)
-            ->where('id_kategori', $id_kategori)
-            ->first();
+        return $this->select('
+        tb_artikel.*, 
+        tb_kategori.slug_id as kategori_slug_id, 
+        tb_kategori.slug_en as kategori_slug_en,
+        tb_kategori.nama_kategori_id,
+        tb_kategori.nama_kategori_en,
+        tb_users.nama_lengkap
+    ')
+            ->join('tb_kategori', 'tb_kategori.id_kategori = tb_artikel.id_kategori')
+            ->join('tb_users', 'tb_users.id_user = tb_artikel.id_user')  // sesuaikan kolom id sesuai tabelmu
+            ->where('tb_artikel.id_kategori', $kategoriId)
+            ->where('tb_artikel.id_artikel !=', $artikelId)
+            ->orderBy('tb_artikel.published_at', 'DESC')
+            ->findAll($limit);
     }
+
+
+
 
     public function getMetaOnly($slug_id, $id_kategori)
     {

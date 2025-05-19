@@ -1,3 +1,73 @@
+<?php
+// Pastikan variabel $lang, $currentCategorySlug, $currentArticleSlug, $categories sudah tersedia
+
+// Ambil bahasa dari session, fallback ke 'id'
+$lang_segment = session()->get('lang') ?? 'id';
+
+// Tentukan bahasa baru
+$newLang = ($lang_segment === 'id') ? 'en' : 'id';
+
+// Definisikan homeLink berdasarkan bahasa saat ini
+$homeLink = $lang_segment; // base_url('en') atau base_url('id')
+
+// Model kategori & artikel
+$categoryModel = new \App\Models\KategoriModel();
+$articleModel = new \App\Models\ArtikelModel();
+
+// Default switchUrl ke homepage bahasa baru
+$switchUrl = base_url($newLang);
+
+// Logika switch URL
+
+// Kalau di halaman detail artikel
+if (!empty($currentCategorySlug) && !empty($currentArticleSlug)) {
+    // Cari kategori berdasarkan slug dan bahasa saat ini
+    $category = $categoryModel->where("slug_kategori_{$lang_segment}", $currentCategorySlug)->first();
+    // Cari artikel berdasarkan slug dan bahasa saat ini
+    $article = $articleModel->where("slug_{$lang_segment}", $currentArticleSlug)->first();
+
+    if ($category && $article) {
+        // Ambil slug kategori dan artikel di bahasa target
+        $newCategorySlug = $category["slug_kategori_{$newLang}"];
+        $newArticleSlug = $article["slug_{$newLang}"];
+
+        // Bangun URL switch bahasa ke detail artikel
+        $switchUrl = base_url("{$newLang}/{$newCategorySlug}/{$newArticleSlug}");
+    }
+}
+// Kalau di halaman kategori (tidak detail artikel)
+elseif (!empty($currentCategorySlug) && empty($currentArticleSlug)) {
+    $category = $categoryModel->where("slug_kategori_{$lang_segment}", $currentCategorySlug)->first();
+
+    if ($category) {
+        $newCategorySlug = $category["slug_kategori_{$newLang}"];
+        // URL switch bahasa ke halaman kategori
+        $switchUrl = base_url("{$newLang}/{$newCategorySlug}");
+    }
+}
+// Kalau halaman lain, tetap arahkan ke homepage bahasa baru (default)
+else {
+    $switchUrl = base_url($newLang);
+}
+
+// Buat link kategori navbar
+$categoryLinks = [];
+if (!empty($categories)) {
+    foreach ($categories as $cat) {
+        $slug = $cat["slug_{$lang_segment}"];
+        $name = $cat["nama_kategori_{$lang_segment}"];
+        $categoryLinks[] = [
+            'url' => base_url("{$lang_segment}/{$slug}"),
+            'name' => $name
+        ];
+    }
+}
+?>
+
+
+
+
+
 <div id="nav">
     <!-- Top Nav -->
     <div id="nav-top">
@@ -38,69 +108,101 @@
     <!-- Main Nav -->
     <div id="nav-bottom">
         <div class="container">
-            <!-- nav -->
             <ul class="nav-menu">
-                <li>
-                    <a href="<?= base_url() ?>">Beranda</a>
+                <?php
+                $slugField = ($lang_segment === 'en') ? 'slug_en' : 'slug_id';
+                $nameField = ($lang_segment === 'en') ? 'nama_kategori_en' : 'nama_kategori_id';
+                ?>
 
-                </li>
+                <li><a href="<?= base_url($homeLink) ?>"><?= ($lang_segment === 'en') ? 'Home' : 'Beranda' ?></a></li>
 
                 <?php
-                // Ambil 3 kategori pertama
                 $topCategories = array_slice($allKategoris, 0, 3);
-                foreach ($topCategories as $item): ?>
-                    <li><a href="<?= base_url($item['kategori']['slug_id']); ?>">
-                            <?= $item['kategori']['nama_kategori_id'] ?>
-                        </a></li>
+                foreach ($topCategories as $item):
+                    $slug = $item['kategori'][$slugField];
+                    $name = $item['kategori'][$nameField];
+                ?>
+                    <li>
+                        <a href="<?= base_url("$lang_segment/" . urlencode($slug)) ?>">
+                            <?= esc($name) ?>
+                        </a>
+                    </li>
                 <?php endforeach; ?>
 
-                <li class="has-dropdown megamenu">
-                    <a href="#">Kategori Lainnya</a>
-                    <div class="dropdown">
-                        <div class="dropdown-body">
-                            <div class="row">
-                                <?php
-                                // Bagi semua kategori menjadi 4 kolom
-                                $chunks = array_chunk($allKategoris, ceil(count($allKategoris) / 4));
-                                foreach ($chunks as $column): ?>
-                                    <div class="col-md-3">
-                                        <ul class="dropdown-list">
-                                            <?php foreach ($column as $item): ?>
-                                                <li>
-                                                    <a href="<?= base_url($item['kategori']['slug_id']) ?>">
-                                                        <?= $item['kategori']['nama_kategori_id'] ?>
-                                                    </a>
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </div>
-                                <?php endforeach; ?>
+                <?php if (count($allKategoris) > 3): ?>
+                    <li class="has-dropdown megamenu">
+                        <a href="#"><?= ($lang_segment === 'en') ? 'More Categories' : 'Kategori Lainnya' ?></a>
+                        <div class="dropdown">
+                            <div class="dropdown-body">
+                                <div class="row">
+                                    <?php
+                                    $otherCategories = array_slice($allKategoris, 3);
+                                    $chunks = array_chunk($otherCategories, ceil(count($otherCategories) / 4));
+                                    foreach ($chunks as $column): ?>
+                                        <div class="col-md-3">
+                                            <ul class="dropdown-list">
+                                                <?php foreach ($column as $item):
+                                                    $slug = $item['kategori'][$slugField];
+                                                    $name = $item['kategori'][$nameField];
+                                                ?>
+                                                    <li>
+                                                        <a href="<?= base_url("$lang_segment/" . urlencode($slug)) ?>">
+                                                            <?= esc($name) ?>
+                                                        </a>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </li>
+                <?php endif; ?>
+
+
+                <li class="nav-lang-switch">
+                    <a href="<?= esc($switchUrl) ?>">
+                        Switch to <?= strtoupper($newLang) ?>
+                    </a>
                 </li>
+
             </ul>
-            <!-- /nav -->
         </div>
     </div>
+
+
     <!-- /Main Nav -->
 
     <!-- Aside Nav -->
     <div id="nav-aside">
         <ul class="nav-aside-menu">
-            <li><a href="#">Home</a></li>
-            <li class="has-dropdown"><a>Categories</a>
+            <li><a href="<?= base_url() ?>">Beranda</a></li>
+
+            <?php
+            // Show the same top 3 categories as in main nav
+            $topCategories = array_slice($allKategoris, 0, 3);
+            foreach ($topCategories as $item): ?>
+                <li><a href="<?= base_url($item['kategori']['slug_id']); ?>">
+                        <?= $item['kategori']['nama_kategori_id'] ?>
+                    </a></li>
+            <?php endforeach; ?>
+
+            <li class="has-dropdown">
+                <a>Kategori Lainnya</a>
                 <ul class="dropdown">
-                    <li><a href="#">Lifestyle</a></li>
-                    <li><a href="#">Fashion</a></li>
-                    <li><a href="#">Technology</a></li>
-                    <li><a href="#">Travel</a></li>
-                    <li><a href="#">Health</a></li>
+                    <?php
+                    // Show all remaining categories in a single column
+                    $remainingCategories = array_slice($allKategoris, 3);
+                    foreach ($remainingCategories as $item): ?>
+                        <li>
+                            <a href="<?= base_url($item['kategori']['slug_id']) ?>">
+                                <?= $item['kategori']['nama_kategori_id'] ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contacts</a></li>
-            <li><a href="#">Advertise</a></li>
         </ul>
         <button class="nav-close nav-aside-close"><span></span></button>
     </div>
