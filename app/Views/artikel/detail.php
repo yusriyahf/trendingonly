@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="post-category">
-                    <a href="<?= base_url($kategori[service('request')->getLocale() == 'en' ? 'slug_en' : 'slug_id']) ?>">
+                    <a href="/<?= $lang; ?><?= base_url($kategori[service('request')->getLocale() == 'en' ? 'slug_en' : 'slug_id']) ?>">
                         <?= esc($kategori[service('request')->getLocale() == 'en' ? 'nama_kategori_en' : 'nama_kategori_id']) ?>
                     </a>
                 </div>

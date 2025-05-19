@@ -34,16 +34,16 @@
                         $categoryName = $firstArticle['nama_kategori'] ?? $kategori['nama_kategori_id'] ?? 'Uncategorized';
                         ?>
 
-                        <a class="post-img" href="/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
+                        <a class="post-img" href="/<?= $lang; ?>/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
                             <img src="<?= base_url('uploads/' . ($firstArticle['thumbnail'] ?? 'default-thumbnail.jpg')) ?>" alt="<?= htmlspecialchars($firstArticle['judul_id'] ?? '') ?>" loading="lazy">
                         </a>
 
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="/kategori/<?= $categorySlug ?>"><?= htmlspecialchars($categoryName) ?></a>
+                                <a href="/<?= $lang; ?>/<?= $categorySlug ?>"><?= htmlspecialchars($categoryName) ?></a>
                             </div>
                             <h3 class="post-title title-lg">
-                                <a href="/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
+                                <a href="/<?= $lang; ?>/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
                                     <?= htmlspecialchars($firstArticle['judul_id'] ?? 'No Title') ?>
                                 </a>
                             </h3>
@@ -83,22 +83,22 @@
                                     ($article['kategori']['nama_kategori_id'] ??
                                         ($kategori['nama_kategori_id'] ?? 'Uncategorized'));
                             ?>
-                                <a class="post-img" href="/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
+                                <a class="post-img" href="/<?= $lang; ?>/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                     <img src="<?= base_url('uploads/' . ($article['thumbnail'] ?? 'assets/img/post-3.jpg')) ?>"
                                         alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>" loading="lazy">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="/kategori/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
+                                        <a href="/<?= $lang; ?>/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
                                     </div>
                                     <h3 class="post-title">
-                                        <a href="/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
+                                        <a href="/<?= $lang; ?>/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                             <?= htmlspecialchars($article['judul_id'] ?? 'No Title') ?>
                                         </a>
                                     </h3>
                                     <ul class="post-meta">
                                         <li>
-                                            <a href="/author/<?= $article['penulis_slug'] ?? 'unknown' ?>">
+                                            <a href="/<?= $lang; ?>/author/<?= $article['penulis_slug'] ?? 'unknown' ?>">
                                                 <?= htmlspecialchars($article['nama_lengkap'] ?? 'Penulis Tidak Diketahui') ?>
                                             </a>
                                         </li>
@@ -135,16 +135,16 @@
                                     ($article['kategori']['nama_kategori_id'] ??
                                         ($kategori['nama_kategori_id'] ?? 'Uncategorized'));
                             ?>
-                                <a class="post-img" href="/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
+                                <a class="post-img" href="/<?= $lang; ?>/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                     <img src="<?= base_url('uploads/' . ($article['thumbnail'] ?? 'assets/img/post-3.jpg')) ?>"
                                         alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>" loading="lazy">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="/kategori/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
+                                        <a href="/<?= $lang; ?>/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
                                     </div>
                                     <h3 class="post-title">
-                                        <a href="/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
+                                        <a href="/<?= $lang; ?>/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                             <?= htmlspecialchars($article['judul_id'] ?? 'No Title') ?>
                                         </a>
                                     </h3>
@@ -186,9 +186,13 @@
                             <a class="post-img" href="#"><img src="<?= base_url('assets/img/post-13.jpg'); ?>" alt="" loading="lazy"></a>
                             <div class="post-body">
                                 <div class="post-category">
-                                    <a href="<?= base_url($kategori['slug_id']); ?>"><?= esc($kategori['nama_kategori_id']) ?></a>
+                                    <a href="/<?= esc($lang) ?>/<?= esc($kategori['slug_id']) ?>"><?= esc($kategori['nama_kategori_id']) ?></a>
+
                                 </div>
-                                <h3 class="post-title"><a href="<?= base_url($kategori['slug_id'] . '/' . $artikel['slug_id']); ?>"><?= esc($artikel['judul_id']) ?></a></h3>
+                                <h3 class="post-title"><a href="/<?= esc($lang) ?>/<?= esc($kategori['slug_id']) ?>/<?= esc($artikel['slug_id']) ?>">
+                                        <?= esc($artikel['judul_id']) ?>
+                                    </a>
+                                </h3>
                                 <ul class="post-meta">
                                     <li><a href="#"><?= esc($artikel['nama_lengkap'] ?? 'Penulis Tidak Diketahui') ?></a></li>
                                     <li><?= date('d F Y', strtotime($artikel['published_at'] ?? 'now')) ?></li>
@@ -295,19 +299,21 @@
                     <?php foreach ($popularArticles as $article): ?>
                         <!-- post -->
                         <div class="post post-widget">
-                            <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
+                            <a class="post-img" href="/<?= esc($lang) ?>/<?= esc($article['kategori']['slug_id']) ?>/<?= esc($article['slug_id']) ?>">
                                 <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>" loading="lazy">
                             </a>
                             <div class="post-body">
                                 <div class="post-category">
-                                    <a href="<?= base_url($article['kategori']['slug_id']) ?>">
-                                        <?= $article['kategori']['nama_kategori_id'] ?>
+                                    <a href="/<?= esc($lang) ?>/<?= esc($article['kategori']['slug_id']) ?>">
+                                        <?= esc($article['kategori']['nama_kategori_id']) ?>
                                     </a>
+
                                 </div>
                                 <h3 class="post-title">
-                                    <a href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                        <?= $article['judul_id'] ?>
+                                    <a href="/<?= esc($lang) ?>/<?= esc($article['kategori']['slug_id']) ?>/<?= esc($article['slug_id']) ?>">
+                                        <?= esc($article['judul_id']) ?>
                                     </a>
+
                                 </h3>
                             </div>
                         </div>

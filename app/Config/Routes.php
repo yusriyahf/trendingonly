@@ -80,20 +80,19 @@ $routes->group('admin', ['filter' => 'auth:admin'], function ($routes) {
 
 
 $routes->get('/', function () {
-    return redirect()->to('/id');
+  return redirect()->to('/id');
 });
 
 
 // USER TANPA LOGIN
 $routes->group('id', function ($routes) {
-    $routes->get('/', 'Beranda::index');
-    $routes->get('(:segment)', 'Artikel::kategori/id/$1');       // kirim lang 'id'
-    $routes->get('(:segment)/(:segment)', 'Artikel::detail/id/$1/$2');   // kirim lang 'id'
+  $routes->get('/', 'Beranda::index');
+  $routes->get('(:segment)', 'Artikel::kategori/id/$1');       // kirim lang 'id'
+  $routes->get('(:segment)/(:segment)', 'Artikel::detail/id/$1/$2');   // kirim lang 'id'
 });
 
 $routes->group('en', function ($routes) {
-    $routes->get('/', 'Beranda::index');
-    $routes->get('(:segment)', 'Artikel::kategori/en/$1');       // kirim lang 'en'
-    $routes->get('(:segment)/(:segment)', 'Artikel::detail/en/$1/$2');   // kirim lang 'en'
+  $routes->get('/', 'Beranda::index');
+  $routes->get('(:segment)', 'Artikel::kategori/en/$1');       // kirim lang 'en'
+  $routes->get('(:segment)/(:segment)', 'Artikel::detail/en/$1/$2');   // kirim lang 'en'
 });
-
