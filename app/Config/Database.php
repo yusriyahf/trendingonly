@@ -28,7 +28,7 @@ class Database extends Config
         'DSN'          => '',
         'hostname'     => 'localhost',
         'username'     => 'root',
-        'password'     => 'pwdpwd8',
+        'password'     => '',
         'database'     => 'trendingonly',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',

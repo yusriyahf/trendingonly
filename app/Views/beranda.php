@@ -28,7 +28,7 @@
                     <!-- post -->
                     <div class="post post-thumb">
                         <a class="post-img" href="/<?= $latestArticles[0]['kategori']['slug_id']; ?>/<?= $latestArticles[0]['slug_id']; ?>">
-                            <img src="<?= base_url('uploads/' . $latestArticles[0]['thumbnail']); ?>" alt="<?= $latestArticles[0]['judul_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $latestArticles[0]['thumbnail']); ?>" alt="<?= $latestArticles[0]['judul_id']; ?>" alt="<?= $latestArticles[0]['judul_id']; ?>">
                         </a>
                         <div class="post-body">
                             <div class="post-category">
@@ -51,7 +51,7 @@
                     <?php $secondArticle = count($latestArticles) > 1 ? $latestArticles[1] : $latestArticles[0]; ?>
                     <div class="post post-thumb">
                         <a class="post-img" href="/<?= $secondArticle['kategori']['slug_id']; ?>/<?= $secondArticle['slug_id']; ?>">
-                            <img src="<?= base_url('uploads/' . $secondArticle['thumbnail']); ?>" alt="<?= $secondArticle['judul_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $secondArticle['thumbnail']); ?>" alt="<?= $secondArticle['judul_id']; ?>" loading="lazy">
                         </a>
                         <div class="post-body">
                             <div class="post-category">
@@ -78,7 +78,7 @@
                     ?>
                     <div class="post post-thumb">
                         <a class="post-img" href="/<?= $thirdArticle['kategori']['slug_id']; ?>/<?= $thirdArticle['slug_id']; ?>">
-                            <img src="<?= base_url('uploads/' . $thirdArticle['thumbnail']); ?>" alt="<?= $thirdArticle['judul_id']; ?>">
+                            <img src="<?= base_url('uploads/' . $thirdArticle['thumbnail']); ?>" alt="<?= $thirdArticle['judul_id']; ?>" loading="lazy">
                         </a>
                         <div class="post-body">
                             <div class="post-category">
@@ -143,7 +143,7 @@
                                                         alt="<?= htmlspecialchars($artikel['judul_id'], ENT_QUOTES) ?>"
                                                         class="zoom-on-hover"
                                                         style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
-                                                        onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
+                                                        onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'" loading="lazy">
                                                 </div>
                                             </a>
                                             <div class="post-body">
@@ -275,7 +275,7 @@
                             <!-- post -->
                             <div class="post post-widget">
                                 <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                    <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>">
+                                    <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>" loading="lazy">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">

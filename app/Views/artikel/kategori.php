@@ -35,7 +35,7 @@
                         ?>
 
                         <a class="post-img" href="/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
-                            <img src="<?= base_url('uploads/' . ($firstArticle['thumbnail'] ?? 'default-thumbnail.jpg')) ?>" alt="<?= htmlspecialchars($firstArticle['judul_id'] ?? '') ?>">
+                            <img src="<?= base_url('uploads/' . ($firstArticle['thumbnail'] ?? 'default-thumbnail.jpg')) ?>" alt="<?= htmlspecialchars($firstArticle['judul_id'] ?? '') ?>" loading="lazy">
                         </a>
 
                         <div class="post-body">
@@ -85,7 +85,7 @@
                             ?>
                                 <a class="post-img" href="/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                     <img src="<?= base_url('uploads/' . ($article['thumbnail'] ?? 'assets/img/post-3.jpg')) ?>"
-                                        alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>">
+                                        alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>" loading="lazy">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
@@ -137,7 +137,7 @@
                             ?>
                                 <a class="post-img" href="/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                     <img src="<?= base_url('uploads/' . ($article['thumbnail'] ?? 'assets/img/post-3.jpg')) ?>"
-                                        alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>">
+                                        alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>" loading="lazy">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
@@ -183,7 +183,7 @@
                 <?php else: ?>
                     <?php foreach ($artikels as $artikel): ?>
                         <div class="post post-row">
-                            <a class="post-img" href="#"><img src="<?= base_url('assets/img/post-13.jpg'); ?>" alt=""></a>
+                            <a class="post-img" href="#"><img src="<?= base_url('assets/img/post-13.jpg'); ?>" alt="" loading="lazy"></a>
                             <div class="post-body">
                                 <div class="post-category">
                                     <a href="<?= base_url($kategori['slug_id']); ?>"><?= esc($kategori['nama_kategori_id']) ?></a>
@@ -296,7 +296,7 @@
                         <!-- post -->
                         <div class="post post-widget">
                             <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>">
+                                <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>" loading="lazy">
                             </a>
                             <div class="post-body">
                                 <div class="post-category">

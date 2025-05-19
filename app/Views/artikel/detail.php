@@ -100,7 +100,7 @@
                     <div class="author media">
                         <div class="media-left">
                             <a href="#">
-                                <img class="author-img media-object" src="<?= base_url('assets/img/avatar-1.jpg'); ?>" alt="">
+                                <img class="author-img media-object" src="<?= base_url('assets/img/avatar-1.jpg'); ?>" alt="" loading="lazy">
                             </a>
                         </div>
                         <div class="media-body">
@@ -231,7 +231,7 @@
                         <!-- post -->
                         <div class="post post-widget">
                             <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>">
+                                <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>" loading="lazy">
                             </a>
                             <div class="post-body">
                                 <div class="post-category">
@@ -287,7 +287,7 @@
                 <!-- Ad widget -->
                 <div class="aside-widget text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="./img/ad-1.jpg" alt="">
+                        <img class="img-responsive" src="./img/ad-1.jpg" alt="" loading="lazy">
                     </a>
                 </div>
                 <!-- /Ad widget -->
