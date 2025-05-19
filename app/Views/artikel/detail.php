@@ -123,7 +123,7 @@
                     <div class="author media">
                         <div class="media-left">
                             <a href="#">
-                                <img class="author-img media-object" src="<?= base_url('assets/img/avatar-1.jpg'); ?>" alt="" loading="lazy">
+                                <img class="author-img media-object" src="<?= base_url('assets/img/avatar-1.jpg'); ?>" alt="">
                             </a>
                         </div>
                         <div class="media-body">
@@ -222,26 +222,21 @@
                     <?php foreach ($popularArticles as $article): ?>
                         <!-- post -->
                         <div class="post post-widget">
-                            <<<<<<< HEAD
-                                <a class="post-img" href="<?= base_url($article['kategori']['slug_id'] . '/' . $article['slug_id']) ?>">
-                                <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_id'] ?>" loading="lazy">
-                                =======
-                                <a class="post-img" href="<?= base_url($lang . '/' . $article['kategori']['slug_' . $lang] . '/' . $article['slug_' . $lang]) ?>">
-                                    <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_' . $lang] ?>">
-                                    >>>>>>> b6387799bbfaf740b47a7ded8489b39150f2aacc
-                                </a>
-                                <div class="post-body">
-                                    <div class="post-category">
-                                        <a href="<?= base_url($lang . '/' . $article['kategori']['slug_' . $lang]) ?>">
-                                            <?= $article['kategori']['nama_kategori_' . $lang] ?>
-                                        </a>
-                                    </div>
-                                    <h3 class="post-title">
-                                        <a href="<?= base_url($lang . '/' . $article['kategori']['slug_' . $lang] . '/' . $article['slug_' . $lang]) ?>">
-                                            <?= $article['judul_' . $lang] ?>
-                                        </a>
-                                    </h3>
+                            <a class="post-img" href="<?= base_url($lang . '/' . $article['kategori']['slug_' . $lang] . '/' . $article['slug_' . $lang]) ?>">
+                                <img src="<?= base_url('uploads/' . $article['thumbnail']) ?>" alt="<?= $article['judul_' . $lang] ?>">
+                            </a>
+                            <div class="post-body">
+                                <div class="post-category">
+                                    <a href="<?= base_url($lang . '/' . $article['kategori']['slug_' . $lang]) ?>">
+                                        <?= $article['kategori']['nama_kategori_' . $lang] ?>
+                                    </a>
                                 </div>
+                                <h3 class="post-title">
+                                    <a href="<?= base_url($lang . '/' . $article['kategori']['slug_' . $lang] . '/' . $article['slug_' . $lang]) ?>">
+                                        <?= $article['judul_' . $lang] ?>
+                                    </a>
+                                </h3>
+                            </div>
                         </div>
                         <!-- /post -->
                     <?php endforeach; ?>
@@ -266,7 +261,7 @@
                 <!-- Ad widget -->
                 <div class="aside-widget text-center">
                     <a href="#" style="display: inline-block;margin: auto;">
-                        <img class="img-responsive" src="<?= base_url('assets/img/ad-1.jpg') ?>" alt="" loading="lazy">
+                        <img class="img-responsive" src="<?= base_url('assets/img/ad-1.jpg') ?>" alt="">
                     </a>
                 </div>
                 <!-- /Ad widget -->
