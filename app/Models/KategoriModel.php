@@ -11,16 +11,16 @@ class KategoriModel extends Model
     protected $allowedFields = ['nama_kategori_id', 'nama_kategori_en', 'slug_id', 'slug_en', 'thumbnail', 'meta_title_id', 'meta_title_en', 'meta_description_id', 'meta_description_en', 'created_at'];
     protected $useTimestamps = false;
 
-   public function getBySlug($slug, $lang)
-{
-    $slugColumn = $lang === 'en' ? 'slug_en' : 'slug_id';
+    public function getBySlug($slug, $lang)
+    {
+        $slugColumn = $lang === 'en' ? 'slug_en' : 'slug_id';
 
-    $result = $this->where($slugColumn, $slug)->first();
+        $result = $this->where($slugColumn, $slug)->first();
 
-    log_message('debug', "getBySlug($slug, $lang) => " . json_encode($result));
 
-    return $result;
-}
+
+        return $result;
+    }
 
 
 
