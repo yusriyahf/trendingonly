@@ -134,7 +134,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="section-title">
-                                    <h2 class="title"><?= esc($item['kategori']['nama_kategori_id']) ?></h2>
+                                    <h2 class="title"><?= $lang === 'en' ? esc($item['kategori']['nama_kategori_en']) : esc($item['kategori']['nama_kategori_id']) ?></h2>
                                 </div>
                             </div>
 
@@ -142,7 +142,7 @@
                                 <?php foreach ($displayArticles as $artikel): ?>
                                     <div class="<?= $isOlahraga ? 'col-md-2' : 'col-md-4' ?>">
                                         <div class="post post-sm">
-                                            <a class="post-img" href="<?= base_url($item['kategori']['slug_id'] . '/' . $artikel['slug_id']) ?>">
+                                            <a class="post-img" href="/<?= $lang; ?>/<?= $lang === 'en' ? $item['kategori']['slug_en'] : $item['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $artikel['slug_en'] : $artikel['slug_id']; ?>">
                                                 <?php
                                                 $thumbnail = !empty($artikel['thumbnail'])
                                                     ? base_url('uploads/' . $artikel['thumbnail'])
@@ -150,7 +150,7 @@
                                                 ?>
                                                 <div class="article-image-container" style="width: 100%; height: 200px; overflow: hidden;">
                                                     <img src="<?= $thumbnail ?>"
-                                                        alt="<?= htmlspecialchars($artikel['judul_id'], ENT_QUOTES) ?>"
+                                                        alt="<?= $lang === 'en' ? htmlspecialchars($artikel['judul_en'], ENT_QUOTES) : htmlspecialchars($artikel['judul_id'], ENT_QUOTES) ?>"
                                                         class="zoom-on-hover"
                                                         style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
                                                         onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
@@ -158,13 +158,13 @@
                                             </a>
                                             <div class="post-body">
                                                 <div class="post-category">
-                                                    <a href="<?= base_url($item['kategori']['slug_id']) ?>">
-                                                        <?= esc($item['kategori']['nama_kategori_id']) ?>
+                                                    <a href="/<?= $lang; ?>/kategori/<?= $lang === 'en' ? $item['kategori']['slug_en'] : $item['kategori']['slug_id']; ?>">
+                                                        <?= $lang === 'en' ? esc($item['kategori']['nama_kategori_en']) : esc($item['kategori']['nama_kategori_id']) ?>
                                                     </a>
                                                 </div>
                                                 <h3 class="post-title title-sm">
-                                                    <a href="<?= base_url($item['kategori']['slug_id'] . '/' . $artikel['slug_id']) ?>">
-                                                        <?= esc($artikel['judul_id']) ?>
+                                                    <a href="/<?= $lang; ?>/<?= $lang === 'en' ? $item['kategori']['slug_en'] : $item['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $artikel['slug_en'] : $artikel['slug_id']; ?>">
+                                                        <?= $lang === 'en' ? esc($artikel['judul_en']) : esc($artikel['judul_id']) ?>
                                                     </a>
                                                 </h3>
                                                 <ul class="post-meta">
@@ -177,7 +177,7 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <div class="col-md-12">
-                                    <p>Tidak ada artikel yang tersedia untuk kategori ini.</p>
+                                    <p><?= $lang === 'en' ? 'No articles available for this category.' : 'Tidak ada artikel yang tersedia untuk kategori ini.' ?></p>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -243,23 +243,7 @@
                     <!-- /social widget -->
 
                     <!-- category widget -->
-                    <div class="aside-widget">
-                        <div class="section-title">
-                            <h2 class="title">Categorie</h2>
-                        </div>
-                        <div class="category-widget">
-                            <ul>
-                                <?php foreach (array_slice($allKategoris, 0, 3) as $item): ?>
-                                    <li>
-                                        <a href="<?= base_url($item['kategori']['slug_id']) ?>">
-                                            <?= $item['kategori']['nama_kategori_id'] ?>
-                                            <span><?= $item['count'] ?></span>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    </div>
+
                     <!-- /category widget -->
 
                     <!-- newsletter widget -->

@@ -1580,7 +1580,6 @@ textarea.input {
   opacity: 0.9;
 }
 
-
 /*=========================================================
 	RESPONSIVE
 ===========================================================*/
@@ -1602,31 +1601,46 @@ textarea.input {
     float: left;
   }
 
+  /* MOBILE FIRST (Default for all screens below 576px) */
   .nav-logo img {
     width: 100%;
     height: auto;
-    max-width: 145px; /* ukuran default untuk mobile */
+    max-width: 190px; /* Default mobile size */
+    transition: all 0.3s ease; /* Smooth resizing */
   }
 
-  @media (min-width: 458px) and (max-width: 768px) {
+  /* SMALL DEVICES (Landscape phones, 576px and up) */
+  @media (min-width: 576px) {
     .nav-logo img {
-      width: 165px;
+      max-width: 220px;
     }
   }
 
-  /* Untuk tablet (min-width: 768px dan max-width: 1023px) */
-  @media (min-width: 768px) and (max-width: 1023px) {
+  /* MEDIUM DEVICES (Tablets, 768px and up) */
+  @media (min-width: 768px) {
     .nav-logo img {
-      max-width: 190px;
+      max-width: 230px;
     }
   }
 
-  /* Untuk desktop (min-width: 1024px) */
-  @media (min-width: 1024px) {
+  /* LARGE DEVICES (Desktops, 992px and up) */
+  @media (min-width: 992px) {
     .nav-logo img {
-      max-width: 200px !important;
-      height: 20px;
-      width: 20px;
+      max-width: 200px;
+    }
+  }
+
+  /* EXTRA LARGE DEVICES (Large desktops, 1200px and up) */
+  @media (min-width: 1200px) {
+    .nav-logo img {
+      max-width: 270px;
+    }
+  }
+
+  /* XXL DEVICES (Extra large screens, 1400px and up) */
+  @media (min-width: 1400px) {
+    .nav-logo img {
+      max-width: 300px;
     }
   }
 
