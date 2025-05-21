@@ -142,7 +142,7 @@
                                 <?php foreach ($displayArticles as $artikel): ?>
                                     <div class="<?= $isOlahraga ? 'col-md-2' : 'col-md-4' ?>">
                                         <div class="post post-sm">
-                                            <a class="post-img" href="/<?= $lang; ?>/<?= $lang === 'en' ? $item['kategori']['slug_en'] : $item['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $artikel['slug_en'] : $artikel['slug_id']; ?>">
+                                            <a class="post-img" href="<?= base_url($item['kategori']['slug_id'] . '/' . $artikel['slug_id']) ?>">
                                                 <?php
                                                 $thumbnail = !empty($artikel['thumbnail'])
                                                     ? base_url('uploads/' . $artikel['thumbnail'])
@@ -153,19 +153,21 @@
                                                         alt="<?= $lang === 'en' ? htmlspecialchars($artikel['judul_en'], ENT_QUOTES) : htmlspecialchars($artikel['judul_id'], ENT_QUOTES) ?>"
                                                         class="zoom-on-hover"
                                                         style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
-                                                        onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'">
+                                                        onerror="this.onerror=null;this.src='<?= base_url('assets/img/default-thumbnail.jpg') ?>'" loading="lazy">
                                                 </div>
                                             </a>
                                             <div class="post-body">
                                                 <div class="post-category">
-                                                    <a href="/<?= $lang; ?>/kategori/<?= $lang === 'en' ? $item['kategori']['slug_en'] : $item['kategori']['slug_id']; ?>">
-                                                        <?= $lang === 'en' ? esc($item['kategori']['nama_kategori_en']) : esc($item['kategori']['nama_kategori_id']) ?>
+                                                    <a href="<?= base_url($item['kategori']['slug_id']) ?>">
+                                                        <?= esc($item['kategori']['nama_kategori_id']) ?>
                                                     </a>
+
                                                 </div>
                                                 <h3 class="post-title title-sm">
-                                                    <a href="/<?= $lang; ?>/<?= $lang === 'en' ? $item['kategori']['slug_en'] : $item['kategori']['slug_id']; ?>/<?= $lang === 'en' ? $artikel['slug_en'] : $artikel['slug_id']; ?>">
-                                                        <?= $lang === 'en' ? esc($artikel['judul_en']) : esc($artikel['judul_id']) ?>
+                                                    <a href="<?= base_url($item['kategori']['slug_id'] . '/' . $artikel['slug_id']) ?>">
+                                                        <?= esc($artikel['judul_id']) ?>
                                                     </a>
+
                                                 </h3>
                                                 <ul class="post-meta">
                                                     <li><a href="#"><?= esc($artikel['nama_lengkap'] ?? 'Penulis Tidak Diketahui') ?></a></li>
@@ -268,7 +270,8 @@
                         <?php foreach ($popularArticles as $article): ?>
                             <!-- post -->
                             <div class="post post-widget">
-                                <a class="post-img" href="<?= base_url(esc($article['kategori']['slug_id'] ?? '') . '/' . esc($article['slug_id'] ?? '')) ?>">
+                                <a class="post-img" href="/<?= $lang; ?>/<?= esc($article['kategori']['slug_id'] ?? '') ?>/<?= esc($article['slug_id'] ?? '') ?>">
+
                                     <?php
                                     // Handle thumbnail dengan fallback default image
                                     $thumbnail = (!empty($article['thumbnail']) && file_exists(FCPATH . 'uploads/' . $article['thumbnail']))
@@ -283,14 +286,16 @@
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="<?= base_url(esc($article['kategori']['slug_id'] ?? '')) ?>">
+                                        <a href="/<?= esc($lang) ?>/<?= esc($article['kategori']['slug_id'] ?? '') ?>">
                                             <?= esc($article['kategori']['nama_kategori_id'] ?? 'Uncategorized') ?>
                                         </a>
+
                                     </div>
                                     <h3 class="post-title" style="font-size: 14px; line-height: 1.4;">
-                                        <a href="<?= base_url(esc($article['kategori']['slug_id'] ?? '') . '/' . esc($article['slug_id'] ?? '')) ?>">
+                                        <a href="/<?= esc($lang) ?>/<?= esc($article['kategori']['slug_id'] ?? '') ?>/<?= esc($article['slug_id'] ?? '') ?>">
                                             <?= esc($article['judul_id'] ?? 'Judul tidak tersedia') ?>
                                         </a>
+
                                     </h3>
                                 </div>
                             </div>

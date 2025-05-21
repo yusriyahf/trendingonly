@@ -40,11 +40,11 @@
 
                         <div class="post-body">
                             <div class="post-category">
-                                <a href="/kategori/<?= $categorySlug ?>"><?= htmlspecialchars($categoryName) ?></a>
+                                <a href="/<?= $lang; ?>/<?= $categorySlug ?>"><?= htmlspecialchars($categoryName) ?></a>
                             </div>
                             <h3 class="post-title title-lg">
-                                <a href="/<?= $categorySlug ?>/<?= $firstArticle['slug_' . $lang] ?>">
-                                    <?= htmlspecialchars($firstArticle['judul_' . $lang] ?? 'No Title') ?>
+                                <a href="/<?= $lang; ?>/<?= $categorySlug ?>/<?= $firstArticle['slug_id'] ?>">
+                                    <?= htmlspecialchars($firstArticle['judul_id'] ?? 'No Title') ?>
                                 </a>
                             </h3>
                             <div class="article-meta">
@@ -83,22 +83,22 @@
                                     ($article['kategori']['nama_kategori_' . $lang] ??
                                         ($kategori['nama_kategori_' . $lang] ?? 'Uncategorized'));
                             ?>
-                                <a class="post-img" href="/<?= $catSlug ?>/<?= $article['slug_' . $lang] ?>">
+                                <a class="post-img" href="/<?= $lang; ?>/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                     <img src="<?= base_url('uploads/' . ($article['thumbnail'] ?? 'assets/img/post-3.jpg')) ?>"
-                                        alt="<?= htmlspecialchars($article['judul_' . $lang] ?? '') ?>">
+                                        alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>" loading="lazy">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="/kategori/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
+                                        <a href="/<?= $lang; ?>/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
                                     </div>
                                     <h3 class="post-title">
-                                        <a href="/<?= $catSlug ?>/<?= $article['slug_' . $lang] ?>">
-                                            <?= htmlspecialchars($article['judul_' . $lang] ?? 'No Title') ?>
+                                        <a href="/<?= $lang; ?>/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
+                                            <?= htmlspecialchars($article['judul_id'] ?? 'No Title') ?>
                                         </a>
                                     </h3>
                                     <ul class="post-meta">
                                         <li>
-                                            <a href="/author/<?= $article['penulis_slug'] ?? 'unknown' ?>">
+                                            <a href="/<?= $lang; ?>/author/<?= $article['penulis_slug'] ?? 'unknown' ?>">
                                                 <?= htmlspecialchars($article['nama_lengkap'] ?? 'Penulis Tidak Diketahui') ?>
                                             </a>
                                         </li>
@@ -135,13 +135,13 @@
                                     ($article['kategori']['nama_kategori_' . $lang] ??
                                         ($kategori['nama_kategori_' . $lang] ?? 'Uncategorized'));
                             ?>
-                                <a class="post-img" href="/<?= $catSlug ?>/<?= $article['slug_' . $lang] ?>">
+                                <a class="post-img" href="/<?= $lang; ?>/<?= $catSlug ?>/<?= $article['slug_id'] ?>">
                                     <img src="<?= base_url('uploads/' . ($article['thumbnail'] ?? 'assets/img/post-3.jpg')) ?>"
-                                        alt="<?= htmlspecialchars($article['judul_' . $lang] ?? '') ?>">
+                                        alt="<?= htmlspecialchars($article['judul_id'] ?? '') ?>" loading="lazy">
                                 </a>
                                 <div class="post-body">
                                     <div class="post-category">
-                                        <a href="/kategori/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
+                                        <a href="/<?= $lang; ?>/<?= $catSlug ?>"><?= htmlspecialchars($catName) ?></a>
                                     </div>
                                     <h3 class="post-title">
                                         <a href="/<?= $catSlug ?>/<?= $article['slug_' . $lang] ?>">
@@ -183,7 +183,7 @@
                 <?php else: ?>
                     <?php foreach ($artikels as $artikel): ?>
                         <div class="post post-row">
-                            <a class="post-img" href="#"><img src="<?= base_url('assets/img/post-13.jpg'); ?>" alt=""></a>
+                            <a class="post-img" href="#"><img src="<?= base_url('assets/img/post-13.jpg'); ?>" alt="" loading="lazy"></a>
                             <div class="post-body">
                                 <div class="post-category">
                                     <a href="<?= base_url($kategori['slug_' . $lang]); ?>"><?= esc($kategori['nama_kategori_' . $lang]) ?></a>
@@ -287,11 +287,13 @@
                                     <a href="<?= base_url($article['kategori']['slug_' . $lang]) ?>">
                                         <?= $article['kategori']['nama_kategori_' . $lang] ?>
                                     </a>
+
                                 </div>
                                 <h3 class="post-title">
                                     <a href="<?= base_url($article['kategori']['slug_' . $lang] . '/' . $article['slug_' . $lang]) ?>">
                                         <?= $article['judul_' . $lang] ?>
                                     </a>
+
                                 </h3>
                             </div>
                         </div>
